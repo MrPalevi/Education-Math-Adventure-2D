@@ -1963,6 +1963,7 @@ GameObject:
   - component: {fileID: 1544112324}
   - component: {fileID: 1544112323}
   - component: {fileID: 1544112322}
+  - component: {fileID: 1544112327}
   m_Layer: 0
   m_Name: Palyer
   m_TagString: Untagged
@@ -2031,7 +2032,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &1544112324
 Animator:
   serializedVersion: 5
@@ -2120,6 +2121,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1544112327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544112321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b97a195f3892e458cc97856005d7df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 400
+  playerRB: {fileID: 1544112323}
 --- !u!1 &1821307207
 GameObject:
   m_ObjectHideFlags: 0
