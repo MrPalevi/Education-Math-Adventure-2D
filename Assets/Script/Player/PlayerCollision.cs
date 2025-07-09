@@ -8,7 +8,8 @@ public class PlayerCollision : MonoBehaviour
     {
         if(collision.transform.tag == "Enemy")
         {
-            Debug.Log("Game Over");
+           PlayerManager.isGameOver = true;
+           gameObject.SetActive(false);
         }
     }
 }
