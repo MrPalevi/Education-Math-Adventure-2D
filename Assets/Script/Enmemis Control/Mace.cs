@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Mace : MonoBehaviour
 {
-    public float speed = 0.08f;
+    public float speed = 0.8f;
     public float range = 3;
 
     float startingY;
