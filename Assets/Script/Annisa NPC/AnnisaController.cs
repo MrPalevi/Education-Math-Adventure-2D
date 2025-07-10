@@ -10,6 +10,10 @@ public class AnnisaController : MonoBehaviour
 
     public GameObject chatBoxUI;
     public GameObject ControllerPanel;
+    public GameObject returnToNPCText;
+    public GameObject chatBoxNotComplete;
+    public GameObject chatBoxComplete;
+    public GameObject uiTaskPanel;
 
     void Start()
     {
@@ -42,31 +46,64 @@ public class AnnisaController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (chatBoxUI != null)
+            if (PencilCollector.instance != null)
             {
-                chatBoxUI.SetActive(true); // Tampilkan chat box
-                ControllerPanel.SetActive(false);
-                Debug.Log("Player mendekat, tampilkan chat");
+                if (PencilCollector.instance.HasCompletedMission())
+                {
+                    chatBoxComplete.SetActive(true);
+                    chatBoxUI.SetActive(false);
+                    chatBoxNotComplete.SetActive(false);
+                    ControllerPanel.SetActive(false);
+                    returnToNPCText.SetActive(false);
+                    uiTaskPanel.SetActive(false);
+                    Debug.Log("Misi selesai, tampilkan hasil");
+                }
+                else if (PencilCollector.instance.IsMissionStarted())
+                {
+                    // Misi sudah dimulai, tapi belum selesai
+                    chatBoxNotComplete.SetActive(true);
+                    chatBoxUI.SetActive(false);
+                    chatBoxComplete.SetActive(false);
+                    ControllerPanel.SetActive(false);
+
+                    StartCoroutine(HideChatBoxNotCompleteAfterDelay(2f));
+                }
+                else
+                {
+                    // Misi belum dimulai
+                    chatBoxUI.SetActive(true);
+                    chatBoxComplete.SetActive(false);
+                    chatBoxNotComplete.SetActive(false);
+                    ControllerPanel.SetActive(false);
+                    Debug.Log("Tampilkan chat awal");
+                }
             }
         }
     }
 
-    // private void OnTriggerExit2D(Collider2D collision)
-    // {
-    //     if (collision.CompareTag("Player"))
-    //     {
-    //         if (chatBoxUI != null)
-    //         {
-    //             chatBoxUI.SetActive(false); // Sembunyikan chat box
-    //             ControllerPanel.SetActive(true);
-    //             Debug.Log("Player menjauh, sembunyikan chat");
-    //         }
-    //     }
-    // }
+    IEnumerator HideChatBoxNotCompleteAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (chatBoxNotComplete.activeSelf)
+        {
+            chatBoxNotComplete.SetActive(false);
+            ControllerPanel.SetActive(true);
+        }
+    }
+
+    public void StartMission()
+    {
+        chatBoxUI.SetActive(false);
+        uiTaskPanel.SetActive(true);
+        ControllerPanel.SetActive(true);
+        PencilCollector.instance.StartCollecting();
+    }
 
     public void Tidak()
     {
         chatBoxUI.SetActive(false);
+        chatBoxComplete.SetActive(false);
         ControllerPanel.SetActive(true);
     }
+
 }
