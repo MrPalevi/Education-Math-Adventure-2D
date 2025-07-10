@@ -135,9 +135,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 389
-        y: 131
-        width: 198
-        height: 196
+        y: 141
+        width: 195
+        height: 182
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +155,10 @@ TextureImporter:
       name: Restart
       rect:
         serializedVersion: 2
-        x: 3489
-        y: 1662
+        x: 3494
+        y: 1667
         width: 195
-        height: 191
+        height: 182
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,6 +168,111 @@ TextureImporter:
       bones: []
       spriteID: ade803b3ea7925c4dad64f1b41454352
       internalID: -1320614343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button Pause
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 1015
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7cc5dfd7b011194699542f8d3790f06
+      internalID: 17667389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Restart 1
+      rect:
+        serializedVersion: 2
+        x: 3287
+        y: 1667
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 221b936ee8dabb748af19378bb2fcfeb
+      internalID: -664917209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Play
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 1884
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f194a18a1ceef7d41ad120c79cd0c22a
+      internalID: -1907766330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exit
+      rect:
+        serializedVersion: 2
+        x: 2548
+        y: 1448
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5242945b8bd08024190b5a9a23bffe4f
+      internalID: -1445362634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jump
+      rect:
+        serializedVersion: 2
+        x: 2341
+        y: 2758
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0e2b459bab2c04490c6d170feed3da
+      internalID: 1301055558
       vertices: []
       indices: 
       edges: []
@@ -185,7 +290,12 @@ TextureImporter:
     nameFileIdTable:
       Arraw Kanan: 1902355507
       Arraw Kiri: 2021977453
+      Button Pause: 17667389
+      Exit: -1445362634
+      Jump: 1301055558
+      Play: -1907766330
       Restart: -1320614343
+      Restart 1: -664917209
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
