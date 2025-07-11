@@ -1,0 +1,442 @@
+fileFormatVersion: 2
+guid: 5027bfaa6ebe86a44a3951474bcb4c36
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_5
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1170
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 468d6dfb580cd844eb18a4dd8b7d0316
+      internalID: 144793663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_6
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 1165
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d15115fdc35b2d48ad4e6fcc5ccabb1
+      internalID: -2062930044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_8
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 1155
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de14b18e21050e541bea46b02ec92360
+      internalID: 914741236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_33
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 622
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cb1a24f28457f64d959972e6a552020
+      internalID: -18294211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_35
+      rect:
+        serializedVersion: 2
+        x: 615
+        y: 617
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96139547ea6fbc44f91899dec433199e
+      internalID: -745985812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_36
+      rect:
+        serializedVersion: 2
+        x: 1531
+        y: 626
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a15af6caae0b3104abef6c843de55989
+      internalID: -1770818391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_37
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 627
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdf74de8d455a9342b17df9f50520a1c
+      internalID: 2066422486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_56
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 67
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deb23871eb85205438961629fa965dad
+      internalID: -526233209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_57
+      rect:
+        serializedVersion: 2
+        x: 854
+        y: 64
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2a11ef34e2cd944681a9639d3c385b0
+      internalID: -1137580453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_58
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 68
+        width: 372
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcc8a2afd63cb0a44a7f5e299ecd1947
+      internalID: -635162311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colorful-number-collection-with-flat-design_61
+      rect:
+        serializedVersion: 2
+        x: 1755
+        y: 53
+        width: 620
+        height: 423
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a44f93aad52a82a488358474684b5779
+      internalID: -374724007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      colorful-number-collection-with-flat-design_0: 179922975
+      colorful-number-collection-with-flat-design_1: 1429766247
+      colorful-number-collection-with-flat-design_10: -1619072420
+      colorful-number-collection-with-flat-design_11: 1109835416
+      colorful-number-collection-with-flat-design_12: -884238583
+      colorful-number-collection-with-flat-design_13: 1609442330
+      colorful-number-collection-with-flat-design_14: -1529872658
+      colorful-number-collection-with-flat-design_15: 1943627558
+      colorful-number-collection-with-flat-design_16: -420759352
+      colorful-number-collection-with-flat-design_17: -2010757542
+      colorful-number-collection-with-flat-design_18: -1191350949
+      colorful-number-collection-with-flat-design_19: -1251413765
+      colorful-number-collection-with-flat-design_2: -189377515
+      colorful-number-collection-with-flat-design_20: 1281474336
+      colorful-number-collection-with-flat-design_21: -1595031487
+      colorful-number-collection-with-flat-design_22: 722351987
+      colorful-number-collection-with-flat-design_23: -1975530059
+      colorful-number-collection-with-flat-design_24: -967654709
+      colorful-number-collection-with-flat-design_25: -785045755
+      colorful-number-collection-with-flat-design_26: -1529113098
+      colorful-number-collection-with-flat-design_27: 486344000
+      colorful-number-collection-with-flat-design_28: -1213266927
+      colorful-number-collection-with-flat-design_29: -1240111770
+      colorful-number-collection-with-flat-design_3: -180560359
+      colorful-number-collection-with-flat-design_30: 438701857
+      colorful-number-collection-with-flat-design_31: 1755017097
+      colorful-number-collection-with-flat-design_32: 1495612323
+      colorful-number-collection-with-flat-design_33: -18294211
+      colorful-number-collection-with-flat-design_34: -1734450580
+      colorful-number-collection-with-flat-design_35: -745985812
+      colorful-number-collection-with-flat-design_36: -1770818391
+      colorful-number-collection-with-flat-design_37: 2066422486
+      colorful-number-collection-with-flat-design_38: -2088280632
+      colorful-number-collection-with-flat-design_39: 66245202
+      colorful-number-collection-with-flat-design_4: -537667828
+      colorful-number-collection-with-flat-design_40: -1220388554
+      colorful-number-collection-with-flat-design_41: -2103433184
+      colorful-number-collection-with-flat-design_42: -1874496690
+      colorful-number-collection-with-flat-design_43: -1875227668
+      colorful-number-collection-with-flat-design_44: 1563463233
+      colorful-number-collection-with-flat-design_45: 440341604
+      colorful-number-collection-with-flat-design_46: 472809621
+      colorful-number-collection-with-flat-design_47: -846888866
+      colorful-number-collection-with-flat-design_48: 1852802527
+      colorful-number-collection-with-flat-design_49: -1126288207
+      colorful-number-collection-with-flat-design_5: 144793663
+      colorful-number-collection-with-flat-design_50: -129698735
+      colorful-number-collection-with-flat-design_51: 1026095738
+      colorful-number-collection-with-flat-design_52: -1945570425
+      colorful-number-collection-with-flat-design_53: -654623964
+      colorful-number-collection-with-flat-design_54: 392891297
+      colorful-number-collection-with-flat-design_55: 171397304
+      colorful-number-collection-with-flat-design_56: -526233209
+      colorful-number-collection-with-flat-design_57: -1137580453
+      colorful-number-collection-with-flat-design_58: -635162311
+      colorful-number-collection-with-flat-design_59: 309473983
+      colorful-number-collection-with-flat-design_6: -2062930044
+      colorful-number-collection-with-flat-design_60: -1919589585
+      colorful-number-collection-with-flat-design_61: -374724007
+      colorful-number-collection-with-flat-design_62: 1248183892
+      colorful-number-collection-with-flat-design_63: 1866858091
+      colorful-number-collection-with-flat-design_64: 168505296
+      colorful-number-collection-with-flat-design_65: 1527029627
+      colorful-number-collection-with-flat-design_66: 1417191971
+      colorful-number-collection-with-flat-design_67: 1445161016
+      colorful-number-collection-with-flat-design_68: 2061459341
+      colorful-number-collection-with-flat-design_69: -499708868
+      colorful-number-collection-with-flat-design_7: 537568826
+      colorful-number-collection-with-flat-design_70: -2101774646
+      colorful-number-collection-with-flat-design_71: -2121044986
+      colorful-number-collection-with-flat-design_72: 1735153807
+      colorful-number-collection-with-flat-design_73: 1702193448
+      colorful-number-collection-with-flat-design_74: 788192303
+      colorful-number-collection-with-flat-design_75: -914904943
+      colorful-number-collection-with-flat-design_76: -344368187
+      colorful-number-collection-with-flat-design_77: 792167803
+      colorful-number-collection-with-flat-design_78: -191360305
+      colorful-number-collection-with-flat-design_79: -500201144
+      colorful-number-collection-with-flat-design_8: 914741236
+      colorful-number-collection-with-flat-design_80: 706391855
+      colorful-number-collection-with-flat-design_81: -348075838
+      colorful-number-collection-with-flat-design_82: -1683723180
+      colorful-number-collection-with-flat-design_83: 2079189492
+      colorful-number-collection-with-flat-design_9: -241485988
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

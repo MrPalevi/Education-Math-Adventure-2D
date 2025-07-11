@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class AnnisaController : MonoBehaviour
 {
     private Transform player;
@@ -14,6 +14,7 @@ public class AnnisaController : MonoBehaviour
     public GameObject chatBoxNotComplete;
     public GameObject chatBoxComplete;
     public GameObject uiTaskPanel;
+    public TimeManager timeManager;
 
     void Start()
     {
@@ -56,6 +57,7 @@ public class AnnisaController : MonoBehaviour
                     ControllerPanel.SetActive(false);
                     returnToNPCText.SetActive(false);
                     uiTaskPanel.SetActive(false);
+                    timeManager.StopTimer();
                     Debug.Log("Misi selesai, tampilkan hasil");
                 }
                 else if (PencilCollector.instance.IsMissionStarted())
@@ -96,6 +98,7 @@ public class AnnisaController : MonoBehaviour
         chatBoxUI.SetActive(false);
         uiTaskPanel.SetActive(true);
         ControllerPanel.SetActive(true);
+        timeManager.StartTimer();
         PencilCollector.instance.StartCollecting();
     }
 
