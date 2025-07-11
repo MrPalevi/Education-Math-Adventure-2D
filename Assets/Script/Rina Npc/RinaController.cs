@@ -22,7 +22,7 @@ public class RinaController : MonoBehaviour
 
     [Header("Referensi Objek Misi")]
     public GameObject rinaChatBoxPanelComplete;
-    private bool missionFinished = false;
+    // private bool missionFinished = false;
     private bool isTimeOut = false; // Tambahan untuk blokir chat saat timeout
     public GameObject bridge;
 
@@ -53,7 +53,7 @@ public class RinaController : MonoBehaviour
 
     void HandlePuzzleResult(bool isWin)
     {
-        missionFinished = true;
+        // missionFinished = true;
         isMissionCompleted = true;
 
         int score = isWin ? 100 : 0;
