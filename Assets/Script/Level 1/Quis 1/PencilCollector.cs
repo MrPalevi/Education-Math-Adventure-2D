@@ -13,7 +13,7 @@ public class PencilCollector : MonoBehaviour
 
     public GameObject returnToNPCText;
     public GameObject chatBoxComplete;
-
+    
     private GameObject currentPencil;
     private bool canCollect = false;
     private bool missionStarted = false;

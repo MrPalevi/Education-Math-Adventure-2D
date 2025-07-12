@@ -14,7 +14,11 @@ public class AnnisaController : MonoBehaviour
     public GameObject chatBoxNotComplete;
     public GameObject chatBoxComplete;
     public GameObject uiTaskPanel;
+    public GameObject Teleport;
+    public GameObject Stop;
     public TimeManager timeManager;
+
+    public PencilCollector pencilCollector;
 
     void Start()
     {
@@ -100,6 +104,7 @@ public class AnnisaController : MonoBehaviour
         ControllerPanel.SetActive(true);
         timeManager.StartTimer();
         PencilCollector.instance.StartCollecting();
+        Teleport.SetActive(true);
     }
 
     public void Tidak()
@@ -107,6 +112,16 @@ public class AnnisaController : MonoBehaviour
         chatBoxUI.SetActive(false);
         chatBoxComplete.SetActive(false);
         ControllerPanel.SetActive(true);
+        Teleport.SetActive(false);
+    }
+
+    public void Terimakasih()
+    {
+        Stop.SetActive(false);
+        chatBoxUI.SetActive(false);
+        chatBoxComplete.SetActive(false);
+        ControllerPanel.SetActive(true);
+        Teleport.SetActive(false);
     }
 
 }
