@@ -7,7 +7,7 @@ public class TimeManager : MonoBehaviour
 {
     [Header("Timer Settings")]
     public float totalTimeInSeconds = 120f;
-    private float timeRemaining;
+    public float timeRemaining;
     private bool timerRunning = false;
 
     [Header("UI Components")]
@@ -97,7 +97,7 @@ public class TimeManager : MonoBehaviour
         timeText.gameObject.SetActive(false);
     }
 
-    void ResetTimer()
+    public void ResetTimer()
     {
         timeRemaining = totalTimeInSeconds;
     }

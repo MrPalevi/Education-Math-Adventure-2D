@@ -6,17 +6,19 @@ using UnityEngine.UI;
 public class AngkaCollector : MonoBehaviour
 {
     public static AngkaCollector instance;
+    public GameObject feedbackBenarUI;
+    public GameObject feedbackSalahUI;
 
     private AngkaItem currentAngka;
     private List<int> collectedIDs = new List<int>();
 
     public GameObject collectButton;
-    public GameObject feedbackBenarUI;
-    public GameObject feedbackSalahUI;
 
     [Header("UI Tampilan Angka yang Diambil")]
     public Image[] angkaSlotUI;            // Image slot untuk menampilkan angka
     public Sprite[] angkaSprites;          // Sprite angka dari 1-10
+
+    private bool misiSelesai = false;
 
     private void Awake()
     {
@@ -29,9 +31,6 @@ public class AngkaCollector : MonoBehaviour
     private void Start()
     {
         collectButton.SetActive(false);
-        feedbackBenarUI.SetActive(false);
-        feedbackSalahUI.SetActive(false);
-
         ClearSlotUI(); // Pastikan UI kosong saat mulai
     }
 
@@ -57,11 +56,29 @@ public class AngkaCollector : MonoBehaviour
             Destroy(currentAngka.gameObject);
             HideCollectButton();
 
-            if (collectedIDs.Count >= 10)
+            if (collectedIDs.Count >= 10 && !misiSelesai)
             {
-                CheckAngkaOrder();
+                bool benar = CekUrutan();
+                PlayerPrefs.SetInt("L1M4", benar ? 100 : 0);
+                PlayerPrefs.Save();
+                misiSelesai = true;
+
+                // Panggil fungsi di NPC
+                FindObjectOfType<PaAsepController>()?.NotifyMisiSelesai(benar);
             }
         }
+    }
+
+    private bool CekUrutan()
+    {
+        for (int i = 0; i < collectedIDs.Count; i++)
+        {
+            if (collectedIDs[i] != i + 1)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void ShowAngkaInUI(int id)
@@ -83,53 +100,17 @@ public class AngkaCollector : MonoBehaviour
         }
     }
 
-    private void CheckAngkaOrder()
-    {
-        for (int i = 0; i < collectedIDs.Count; i++)
-        {
-            if (collectedIDs[i] != i + 1)
-            {
-                ShowFeedback(false);
-                PlayerPrefs.SetInt("L1M4", 0);
-                PlayerPrefs.Save();
-                return;
-            }
-        }
-
-        ShowFeedback(true);
-        PlayerPrefs.SetInt("L1M4", 100);
-        PlayerPrefs.Save();
-    }
-
-    private void ShowFeedback(bool isCorrect)
-    {
-        if (isCorrect)
-        {
-            feedbackBenarUI.SetActive(true);
-            Debug.Log("✅ Jawaban Benar, skor 100 disimpan ke L1M4");
-        }
-        else
-        {
-            feedbackSalahUI.SetActive(true);
-            Debug.Log("❌ Jawaban Salah, skor 0 disimpan ke L1M4");
-        }
-
-        StartCoroutine(HideFeedbackAfterDelay());
-    }
-
-    private IEnumerator HideFeedbackAfterDelay()
-    {
-        yield return new WaitForSeconds(2f);
-        feedbackBenarUI.SetActive(false);
-        feedbackSalahUI.SetActive(false);
-    }
-
-    // 🔁 Fungsi reset untuk tes ulang
     public void ResetCollectedAngkaUI()
     {
         collectedIDs.Clear();
+        misiSelesai = false;
         ClearSlotUI();
         HideCollectButton();
         Debug.Log("🔁 Semua angka di-reset.");
+    }
+
+    public bool IsMissionComplete()
+    {
+        return misiSelesai;
     }
 }
