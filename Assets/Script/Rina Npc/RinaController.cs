@@ -25,6 +25,7 @@ public class RinaController : MonoBehaviour
     // private bool missionFinished = false;
     private bool isTimeOut = false; // Tambahan untuk blokir chat saat timeout
     public GameObject bridge;
+    public GameObject chestBox;
 
     void Start()
     {
@@ -64,6 +65,7 @@ public class RinaController : MonoBehaviour
         if (bridge != null)
         {
             bridge.SetActive(true);
+            chestBox.SetActive(true);
         }
 
     }

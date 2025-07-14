@@ -20,6 +20,7 @@ public class DedeController : MonoBehaviour
 
     [Header("Referensi Objek Misi")]
     public GameObject DedeChatCoxPanelComplet;
+    public GameObject chestBox;
 
     [Header("Feedback UI")]
     public GameObject feedbackBenar;
@@ -134,6 +135,7 @@ public class DedeController : MonoBehaviour
         // Tampilkan UI panel complete dan aktifkan kontrol panel
         DedeChatCoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
+        chestBox?.SetActive(true);
         Debug.Log(PlayerPrefs.GetInt("L1M3"));
     }
 
