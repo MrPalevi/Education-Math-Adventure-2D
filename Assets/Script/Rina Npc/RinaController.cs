@@ -22,10 +22,13 @@ public class RinaController : MonoBehaviour
 
     [Header("Referensi Objek Misi")]
     public GameObject rinaChatBoxPanelComplete;
-    // private bool missionFinished = false;
-    private bool isTimeOut = false; // Tambahan untuk blokir chat saat timeout
     public GameObject bridge;
     public GameObject chestBox;
+
+    [Header("Pengaturan Skor")]
+    public string namaPlayerPrefsScore = "L1M2"; // ✅ Bisa diatur di Inspector
+
+    private bool isTimeOut = false;
 
     void Start()
     {
@@ -45,29 +48,29 @@ public class RinaController : MonoBehaviour
             timeManager.OnTimeOut += HandleTimeOut;
         }
 
-        if (bridge != null)
-        {
-            bridge.SetActive(false);
-        }
+        bridge?.SetActive(false);
+        chestBox?.SetActive(false);
     }
-
 
     void HandlePuzzleResult(bool isWin)
     {
-        // missionFinished = true;
         isMissionCompleted = true;
 
         int score = isWin ? 100 : 0;
-        PlayerPrefs.SetInt("L1M2", score);
-        PlayerPrefs.Save();
 
-        Debug.Log("Hasil disimpan ke PlayerPrefs L1M2: " + score);
-        if (bridge != null)
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
-            bridge.SetActive(true);
-            chestBox.SetActive(true);
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
+        }
+        else
+        {
+            Debug.Log($"Skor sudah pernah disimpan sebelumnya di {namaPlayerPrefsScore}, tidak ditimpa.");
         }
 
+        bridge?.SetActive(true);
+        chestBox?.SetActive(true);
     }
 
     void Update()
@@ -75,20 +78,13 @@ public class RinaController : MonoBehaviour
         if (player == null) return;
 
         float distance = Vector2.Distance(player.position, transform.position);
+        spriteRenderer.flipX = player.position.x < transform.position.x;
 
-        // Flip arah NPC
-        if (distance <= detectionRange)
-        {
-            spriteRenderer.flipX = player.position.x < transform.position.x;
-        }
-
-        // Validasi agar tidak memanggil ShowChat saat misi selesai
         if (isPlayerInRange && !isChatShown && !isMissionCompleted)
         {
             ShowChat();
         }
 
-        // Jika misi selesai dan player masih di area, tampilkan panel complete jika belum tampil
         if (isPlayerInRange && isMissionCompleted && !isPanelCompleteShowing)
         {
             ShowCompletePanel();
@@ -97,60 +93,63 @@ public class RinaController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            isPlayerInRange = true;
+        if (!collision.CompareTag("Player")) return;
 
-            if (!isChatShown && !isTimeOut) // Tambahan: blokir saat timeout
-            {
-                ShowChat();
-            }
+        isPlayerInRange = true;
+
+        if (!isChatShown && !isTimeOut)
+        {
+            ShowChat();
         }
     }
 
-
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            isPlayerInRange = false;
-            isChatShown = false;
-            chatBoxUI?.SetActive(false);
+        if (!collision.CompareTag("Player")) return;
 
-            if (rinaChatBoxPanelComplete != null)
-                rinaChatBoxPanelComplete.SetActive(false);
+        isPlayerInRange = false;
+        isChatShown = false;
+        chatBoxUI?.SetActive(false);
 
-            isPanelCompleteShowing = false;
-        }
+        rinaChatBoxPanelComplete?.SetActive(false);
+        isPanelCompleteShowing = false;
     }
 
     public void FeedbackBenar()
     {
-        PlayerPrefs.SetInt("L1M2", 100);
-        PlayerPrefs.Save();
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, 100);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor 100 disimpan untuk {namaPlayerPrefsScore}");
+        }
+        else
+        {
+            Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
+        }
 
         isMissionCompleted = true;
         chatBoxUI.SetActive(false);
         controllerPanel.SetActive(true);
-
-        Debug.Log("Feedback benar. Skor 100 disimpan. Misi selesai.");
     }
 
     public void FeedbackSalah()
     {
-        PlayerPrefs.SetInt("L1M2", 0);
-        PlayerPrefs.Save();
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, 0);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor 0 disimpan untuk {namaPlayerPrefsScore}");
+        }
 
         isMissionCompleted = false;
         chatBoxUI.SetActive(false);
         controllerPanel.SetActive(true);
-
-        Debug.Log("Feedback salah. Skor 0 disimpan.");
     }
 
     void ShowChat()
     {
-        if (isTimeOut) return; // Tambahan: blokir jika waktu habis
+        if (isTimeOut) return;
 
         isChatShown = true;
 
@@ -166,9 +165,7 @@ public class RinaController : MonoBehaviour
         }
 
         controllerPanel?.SetActive(false);
-        Debug.Log("Player mendekati Rina, tampilkan chatBox");
     }
-
 
     void ShowCompletePanel()
     {
@@ -187,27 +184,21 @@ public class RinaController : MonoBehaviour
         chatBoxUI?.SetActive(false);
         panelPuzzle?.SetActive(true);
         controllerPanel?.SetActive(false);
-        isTimeOut = false; // Reset timeout saat mulai ulang misi
+        isTimeOut = false;
 
         timeManager?.StartTimer();
-
-        Debug.Log("Misi dimulai: Puzzle aktif dan timer berjalan.");
     }
 
     public void TolakMisiPuzzle()
     {
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
-        Debug.Log("Player menolak misi.");
     }
 
     IEnumerator HideRinaCompletePanelAfterDelay()
     {
         yield return new WaitForSeconds(2f);
-        if (rinaChatBoxPanelComplete != null)
-        {
-            rinaChatBoxPanelComplete.SetActive(false);
-        }
+        rinaChatBoxPanelComplete?.SetActive(false);
         isPanelCompleteShowing = false;
     }
 
@@ -217,11 +208,8 @@ public class RinaController : MonoBehaviour
         chatBoxUI?.SetActive(false);
         isChatShown = false;
         isMissionCompleted = false;
-        isTimeOut = true; // Aktifkan blokir agar chat tidak muncul
+        isTimeOut = true;
 
-        Debug.Log("Waktu habis, misi di-reset.");
-
-        // Jangan munculkan ChatBox walaupun player masih di dalam collider
+        Debug.Log("Waktu habis, misi puzzle di-reset.");
     }
-
 }

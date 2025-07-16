@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e08623fbdef90014bb54d1934501322c
+guid: f306cf5a74f8ea748815a81ff5288225
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,139 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Window_0
+      name: Papan hitam
       rect:
         serializedVersion: 2
-        x: 2741
-        y: 2954
-        width: 694
-        height: 389
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5cfb3f84099f0e48a8ce7bd985758ab
-      internalID: 1365796462
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_1
-      rect:
-        serializedVersion: 2
-        x: 3052
-        y: 3578
-        width: 836
-        height: 473
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 1, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 91c5b9e79cc3846418484011be302aa9
-      internalID: -590681326
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_3
-      rect:
-        serializedVersion: 2
-        x: 1807
-        y: 48
-        width: 172
-        height: 149
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1f4d487e384acb478d1a05f710a3e14
-      internalID: -1650651964
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: B1
-      rect:
-        serializedVersion: 2
-        x: 902
-        y: 41
-        width: 136
-        height: 130
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9d9560b66783f7b4dbcb145342961533
-      internalID: 1966429254
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: B3
-      rect:
-        serializedVersion: 2
-        x: 1227
-        y: 41
-        width: 136
-        height: 130
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60373ee94b2361f4d9cc261758f6874a
-      internalID: -1109665178
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: B2
-      rect:
-        serializedVersion: 2
-        x: 1050
-        y: 74
-        width: 174
-        height: 169
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 849b15d9ce0663f4ea7d15f95d5c6d04
-      internalID: -1044667961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_2
-      rect:
-        serializedVersion: 2
-        x: 2311
-        y: 985
-        width: 490
-        height: 253
+        x: 102
+        y: 738
+        width: 812
+        height: 478
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,8 +124,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 211e3ece946371540a466d515bebe47f
-      internalID: -380792050
+      spriteID: 1a5dc6e9397829f40a46240d0c587003
+      internalID: -2119688946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: papan fulll
+      rect:
+        serializedVersion: 2
+        x: 1070
+        y: 180
+        width: 811
+        height: 910
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7e7bb3f963436944842900804fd2e9b
+      internalID: 1066971867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Papan hijau
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 137
+        width: 810
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbcfd87db1f83e648a6590c7e6164e8e
+      internalID: 1385682505
       vertices: []
       indices: 
       edges: []
@@ -267,14 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      B Empety: -695990608
-      B1: 1966429254
-      B2: -1044667961
-      B3: -1109665178
-      Window_0: 1365796462
-      Window_1: -590681326
-      Window_2: -380792050
-      Window_3: -1650651964
+      Papan hijau: 1385682505
+      Papan hitam: -2119688946
+      papan fulll: 1066971867
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

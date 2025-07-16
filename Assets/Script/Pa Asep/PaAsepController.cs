@@ -15,6 +15,8 @@ public class PaAsepController : MonoBehaviour
     public Button tolakButton;
     public Button lanjutButton;
     public Button tutupButton;
+    public GameObject Portal;
+    public GameObject NextLevel;
 
     [Header("ChatBox UI Tambahan")]
     public GameObject ChatBoxUiComplete;
@@ -37,6 +39,9 @@ public class PaAsepController : MonoBehaviour
     [TextArea(2, 5)] public string[] dialogKalimatAwal;
     [TextArea(2, 5)] public string[] dialogSetelahBenar;
     [TextArea(2, 5)] public string[] dialogSetelahSalah;
+
+    [Header("Pengaturan Skor")]
+    public string namaPlayerPrefsScore = "L1M1";
 
     private int indexDialog = 0;
     private int indexDialogComplete = 0;
@@ -74,6 +79,7 @@ public class PaAsepController : MonoBehaviour
         ReturnToPaAsep.SetActive(false);
         TimeOverPanel.SetActive(false);
         controllerPanel.SetActive(true);
+        NextLevel.SetActive(false);
 
         lanjutButton.onClick.AddListener(LanjutDialog);
         terimaButton.onClick.AddListener(TerimaMisi);
@@ -149,6 +155,7 @@ public class PaAsepController : MonoBehaviour
         terimaButton.gameObject.SetActive(false);
         tolakButton.gameObject.SetActive(false);
         lanjutButton.gameObject.SetActive(true);
+        Portal.gameObject.SetActive(true);
     }
 
     void TolakMisi()
@@ -223,6 +230,19 @@ public class PaAsepController : MonoBehaviour
         AngkaCollector.instance.feedbackBenarUI.SetActive(false);
         AngkaCollector.instance.feedbackSalahUI.SetActive(false);
 
+        // Simpan skor hanya jika belum pernah disimpan
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            int score = isJawabanBenar ? 100 : 0;
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
+            PlayerPrefs.Save();
+            Debug.Log("Skor " + score + " disimpan di PlayerPrefs dengan key: " + namaPlayerPrefsScore);
+        }
+        else
+        {
+            Debug.Log("Skor untuk " + namaPlayerPrefsScore + " sudah ada, tidak ditimpa.");
+        }
+
         TampilkanDialogComplete();
     }
 
@@ -261,6 +281,7 @@ public class PaAsepController : MonoBehaviour
 
         if (isJawabanBenar)
             chestBox.SetActive(true);
+            NextLevel.SetActive(true);
     }
 
     IEnumerator SembunyikanNoCompleteSetelahDelay()

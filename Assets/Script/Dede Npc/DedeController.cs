@@ -9,6 +9,7 @@ public class DedeController : MonoBehaviour
 
     public GameObject chatBoxUI;
     public GameObject controllerPanel;
+    public GameObject Stop;
     private bool isChatShown = false;
     private bool isPlayerInRange = false;
     private bool isMissionCompleted = false;
@@ -27,6 +28,9 @@ public class DedeController : MonoBehaviour
     public GameObject feedbackSalah;
     public float feedbackDuration = 2f;
 
+    [Header("Pengaturan Skor")]
+    public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -35,6 +39,7 @@ public class DedeController : MonoBehaviour
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
         DedeChatCoxPanelComplet?.SetActive(false);
+        Stop?.SetActive(true);
 
         if (timeManager != null)
             timeManager.OnTimeOut += HandleTimeOut;
@@ -60,27 +65,24 @@ public class DedeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            isPlayerInRange = true;
+        if (!collision.CompareTag("Player")) return;
 
-            if (!isChatShown && !isTimeOut)
-            {
-                // Hanya jalankan ShowChat jika belum selesai
-                ShowChat();
-            }
+        isPlayerInRange = true;
+
+        if (!isChatShown && !isTimeOut)
+        {
+            ShowChat();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            isPlayerInRange = false;
-            isChatShown = false;
-            chatBoxUI?.SetActive(false);
-            DedeChatCoxPanelComplet?.SetActive(false);
-        }
+        if (!collision.CompareTag("Player")) return;
+
+        isPlayerInRange = false;
+        isChatShown = false;
+        chatBoxUI?.SetActive(false);
+        DedeChatCoxPanelComplet?.SetActive(false);
     }
 
     public void MulaiMisiPuzzle()
@@ -101,30 +103,34 @@ public class DedeController : MonoBehaviour
 
     public void OnPuzzleCheckResult(bool isCorrect)
     {
-        // Hentikan Timer setelah puzzle selesai
         timeManager?.StopTimer();
-
-        // Sembunyikan panel puzzle terlebih dahulu
         panelPuzzle?.SetActive(false);
-
-        // Tampilkan feedback kemudian lanjut ke panel selesai
+        Stop.SetActive(false);
         StartCoroutine(ShowFeedbackThenComplete(isCorrect));
     }
 
     IEnumerator ShowFeedbackThenComplete(bool isCorrect)
     {
+        int score = isCorrect ? 100 : 0;
+
+        // Tampilkan feedback
         if (isCorrect)
-        {
             feedbackBenar?.SetActive(true);
-            PlayerPrefs.SetInt("L1M3", 100);
+        else
+            feedbackSalah?.SetActive(true);
+
+        // Validasi agar tidak menyimpan skor dua kali
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
         }
         else
         {
-            feedbackSalah?.SetActive(true);
-            PlayerPrefs.SetInt("L1M3", 0);
+            Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
         }
 
-        PlayerPrefs.Save();
         yield return new WaitForSeconds(feedbackDuration);
 
         feedbackBenar?.SetActive(false);
@@ -132,22 +138,20 @@ public class DedeController : MonoBehaviour
 
         isMissionCompleted = true;
 
-        // Tampilkan UI panel complete dan aktifkan kontrol panel
         DedeChatCoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
         chestBox?.SetActive(true);
-        Debug.Log(PlayerPrefs.GetInt("L1M3"));
     }
 
     void ShowChat()
     {
-        if (isTimeOut) return; // Blokir saat waktu habis
+        if (isTimeOut) return;
 
         isChatShown = true;
 
         if (isMissionCompleted && DedeChatCoxPanelComplet != null)
         {
-            chatBoxUI?.SetActive(false); // Pastikan ini disembunyikan
+            chatBoxUI?.SetActive(false);
             controllerPanel?.SetActive(true);
             DedeChatCoxPanelComplet.SetActive(true);
             StartCoroutine(HideCompletePanelAfterDelay());
@@ -164,12 +168,8 @@ public class DedeController : MonoBehaviour
     IEnumerator HideCompletePanelAfterDelay()
     {
         yield return new WaitForSeconds(2f);
-        if (DedeChatCoxPanelComplet != null)
-        {
-            DedeChatCoxPanelComplet.SetActive(false);
-        }
+        DedeChatCoxPanelComplet?.SetActive(false);
     }
-
 
     void HandleTimeOut()
     {
@@ -193,10 +193,8 @@ public class DedeController : MonoBehaviour
         DedeChatCoxPanelComplet?.SetActive(false);
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
-
         timeManager?.StopTimer();
 
-        // Reset dropzone
         foreach (DropZone dz in FindObjectsOfType<DropZone>())
         {
             dz.Clear();

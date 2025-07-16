@@ -277,6 +277,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Level
+      rect:
+        serializedVersion: 2
+        x: 2342
+        y: 361
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8c5ba195428b0247a0dfb6cca76b63e
+      internalID: 1538698784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -293,6 +314,7 @@ TextureImporter:
       Button Pause: 17667389
       Exit: -1445362634
       Jump: 1301055558
+      Level: 1538698784
       Play: -1907766330
       Restart: -1320614343
       Restart 1: -664917209

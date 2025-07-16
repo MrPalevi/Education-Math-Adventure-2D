@@ -44,6 +44,9 @@ public class AnnisaController : MonoBehaviour
 
     public PencilCollector pencilCollector;
 
+    [Header("PlayerPrefs Score")]
+    public string namaPlayerPrefsScore = "L1M1";
+
     private bool isMissionStarted = false;
     private bool isMissionCompleted = false;
     private bool isPlayerInRange = false;
@@ -207,8 +210,17 @@ public class AnnisaController : MonoBehaviour
         uiTaskPanel.SetActive(false);
         timeManager?.StopTimer();
 
-        PlayerPrefs.SetInt("L1M1", 100);
-        PlayerPrefs.Save();
+        // ✅ Simpan skor hanya jika belum pernah disimpan
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, 100);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor berhasil disimpan untuk {namaPlayerPrefsScore} = 100");
+        }
+        else
+        {
+            Debug.Log($"Skor {namaPlayerPrefsScore} sudah pernah disimpan, tidak ditimpa ulang.");
+        }
 
         indexDialogComplete = 0;
         if (dialogSetelahBenar.Length > 0)
@@ -223,6 +235,7 @@ public class AnnisaController : MonoBehaviour
         nextCompleteButton.gameObject.SetActive(dialogSetelahBenar.Length > 1);
         closeCompleteButton.gameObject.SetActive(dialogSetelahBenar.Length <= 1);
     }
+
 
     void LanjutDialogComplete()
     {
@@ -246,6 +259,7 @@ public class AnnisaController : MonoBehaviour
     {
         chatBoxComplete.SetActive(false);
         ControllerPanel.SetActive(true);
+        Stop.SetActive(false);
     }
 
     IEnumerator HideChatBoxNotCompleteAfterDelay(float delay)
@@ -269,7 +283,14 @@ public class AnnisaController : MonoBehaviour
         Teleport?.SetActive(false);
         isMissionStarted = false;
 
-        PlayerPrefs.SetInt("L1M1", 0); // Gagal karena kehabisan waktu
-        PlayerPrefs.Save();
+        // ❌ Simpan nilai 0 hanya jika belum pernah menyelesaikan
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, 0);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor gagal disimpan (0) untuk {namaPlayerPrefsScore}");
+        }
+
+        // pencilCollector.ResetCollector(); // Opsional jika ingin reset ulang
     }
 }
