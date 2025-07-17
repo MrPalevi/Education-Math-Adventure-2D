@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e08623fbdef90014bb54d1934501322c
+guid: 3c34004489c20f24196f6aa858b3675b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,160 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Window_0
+      name: Kelreng_0
       rect:
         serializedVersion: 2
-        x: 2741
-        y: 2954
-        width: 694
-        height: 389
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5cfb3f84099f0e48a8ce7bd985758ab
-      internalID: 1365796462
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_1
-      rect:
-        serializedVersion: 2
-        x: 3052
-        y: 3578
-        width: 836
-        height: 473
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 1, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 91c5b9e79cc3846418484011be302aa9
-      internalID: -590681326
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_3
-      rect:
-        serializedVersion: 2
-        x: 1807
-        y: 48
-        width: 172
-        height: 149
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1f4d487e384acb478d1a05f710a3e14
-      internalID: -1650651964
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: B1
-      rect:
-        serializedVersion: 2
-        x: 902
-        y: 41
-        width: 136
-        height: 130
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9d9560b66783f7b4dbcb145342961533
-      internalID: 1966429254
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: B3
-      rect:
-        serializedVersion: 2
-        x: 1227
-        y: 41
-        width: 136
-        height: 130
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 60373ee94b2361f4d9cc261758f6874a
-      internalID: -1109665178
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: B2
-      rect:
-        serializedVersion: 2
-        x: 1050
-        y: 74
-        width: 174
-        height: 169
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 849b15d9ce0663f4ea7d15f95d5c6d04
-      internalID: -1044667961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_2
-      rect:
-        serializedVersion: 2
-        x: 2311
-        y: 985
-        width: 490
-        height: 253
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 211e3ece946371540a466d515bebe47f
-      internalID: -380792050
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_4
-      rect:
-        serializedVersion: 2
-        x: 2136
-        y: 3326
-        width: 328
-        height: 446
+        x: 822
+        y: 1470
+        width: 258
+        height: 246
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,8 +124,197 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ad227c46da87874c8dce022b94d9b41
-      internalID: -1340263692
+      spriteID: 8be7dfdf0c2ac2041af2f594bb4c1c81
+      internalID: -1255492226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_1
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 1092
+        width: 248
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f7b6cd8819d1584b8d5b4b8869ba27c
+      internalID: -798723712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_2
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 1189
+        width: 260
+        height: 257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8278d28b7a7ec6040aadbbecbb242bd2
+      internalID: 679990236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_3
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 729
+        width: 264
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fb191b5732784d42b30fc70f2fb9cef
+      internalID: -498991890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_4
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 822
+        width: 246
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a86f209724bb42408c7e6f4e886e4f7
+      internalID: 1327840831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_5
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 930
+        width: 246
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b35fa9658179eb54abb131917403fe72
+      internalID: 1149981386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_6
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 450
+        width: 237
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddfe8b3be6dd74d4aa25428d4118c129
+      internalID: 1458307929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_7
+      rect:
+        serializedVersion: 2
+        x: 1106
+        y: 558
+        width: 238
+        height: 234
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31f5a801c8d18e4f8d4c28c2e2bf4cc
+      internalID: -19723287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_8
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 636
+        width: 238
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d5a53e6f7cbaef4c868194e7528116a
+      internalID: 323310592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kelreng_9
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 378
+        width: 252
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144716836c0582d42ba7ef58c7bbd7e7
+      internalID: -1265006747
       vertices: []
       indices: 
       edges: []
@@ -288,15 +330,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      B Empety: -695990608
-      B1: 1966429254
-      B2: -1044667961
-      B3: -1109665178
-      Window_0: 1365796462
-      Window_1: -590681326
-      Window_2: -380792050
-      Window_3: -1650651964
-      Window_4: -1340263692
+      Kelreng_0: -1255492226
+      Kelreng_1: -798723712
+      Kelreng_2: 679990236
+      Kelreng_3: -498991890
+      Kelreng_4: 1327840831
+      Kelreng_5: 1149981386
+      Kelreng_6: 1458307929
+      Kelreng_7: -19723287
+      Kelreng_8: 323310592
+      Kelreng_9: -1265006747
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

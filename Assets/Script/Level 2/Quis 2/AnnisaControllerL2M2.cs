@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DedeController : MonoBehaviour
+public class AnnisaControllerL2M2 : MonoBehaviour
 {
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -20,7 +21,7 @@ public class DedeController : MonoBehaviour
     public TimeManager timeManager;
 
     [Header("Referensi Objek Misi")]
-    public GameObject DedeChatCoxPanelComplet;
+    public GameObject AnnisaChatCoxPanelComplet;
     public GameObject chestBox;
 
     [Header("Feedback UI")]
@@ -29,7 +30,7 @@ public class DedeController : MonoBehaviour
     public float feedbackDuration = 2f;
 
     [Header("Pengaturan Skor")]
-    public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
+    public string namaPlayerPrefsScore = "L2M1"; // ✅ Bisa diatur dari Inspector
 
     void Start()
     {
@@ -38,7 +39,7 @@ public class DedeController : MonoBehaviour
 
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
-        DedeChatCoxPanelComplet?.SetActive(false);
+        AnnisaChatCoxPanelComplet?.SetActive(false);
         Stop?.SetActive(true);
         chestBox?.SetActive(false);
 
@@ -83,7 +84,7 @@ public class DedeController : MonoBehaviour
         isPlayerInRange = false;
         isChatShown = false;
         chatBoxUI?.SetActive(false);
-        DedeChatCoxPanelComplet?.SetActive(false);
+        AnnisaChatCoxPanelComplet?.SetActive(false);
     }
 
     public void MulaiMisiPuzzle()
@@ -110,48 +111,60 @@ public class DedeController : MonoBehaviour
         StartCoroutine(ShowFeedbackThenComplete(isCorrect));
     }
 
-    IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+{
+    int score = isCorrect ? 100 : 0;
+
+    // Pastikan semua feedback dimatikan dulu
+    feedbackBenar?.SetActive(false);
+    feedbackSalah?.SetActive(false);
+
+    yield return null; // Tunggu 1 frame agar reset efektif
+
+    // Tampilkan feedback sesuai hasil
+    if (isCorrect)
     {
-        int score = isCorrect ? 100 : 0;
-
-        if (isCorrect)
-        {
-            feedbackBenar?.SetActive(true);
-        }
-        else
-        {
-            feedbackSalah?.SetActive(true);
-            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
-        }
-
-        // Simpan skor jika belum pernah disimpan
-        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
-        {
-            PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
-            PlayerPrefs.Save();
-            Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
-        }
-        else
-        {
-            Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
-        }
-
-        yield return new WaitForSeconds(feedbackDuration);
-
-        feedbackBenar?.SetActive(false);
-        feedbackSalah?.SetActive(false);
-
-        // ✅ Tunda 0.5 detik baru munculkan chestBox (hanya jika benar)
-        if (isCorrect)
-        {
-            yield return new WaitForSeconds(0.5f);
-            chestBox?.SetActive(true);
-        }
-
-        isMissionCompleted = true;
-        DedeChatCoxPanelComplet?.SetActive(true);
-        controllerPanel?.SetActive(true);
+        feedbackBenar?.SetActive(true);
+        Debug.Log("Feedback Benar ditampilkan");
     }
+    else
+    {
+        feedbackSalah?.SetActive(true);
+        Debug.Log("Feedback Salah ditampilkan");
+        chestBox?.SetActive(false); // Pastikan chest tidak tampil saat salah
+    }
+
+    // Simpan skor jika belum disimpan
+    if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+    {
+        PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
+        PlayerPrefs.Save();
+        Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
+    }
+    else
+    {
+        Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
+    }
+
+    // Tunggu durasi feedback tampil
+    yield return new WaitForSeconds(feedbackDuration);
+
+    feedbackBenar?.SetActive(false);
+    feedbackSalah?.SetActive(false);
+
+    // ✅ Delay 0.5 detik lalu munculkan chestBox jika benar
+    if (isCorrect)
+    {
+        yield return new WaitForSeconds(0.5f);
+        chestBox?.SetActive(true);
+        Debug.Log("ChestBox ditampilkan setelah delay");
+    }
+
+    isMissionCompleted = true;
+    AnnisaChatCoxPanelComplet?.SetActive(true);
+    controllerPanel?.SetActive(true);
+}
+
 
     void ShowChat()
     {
@@ -159,11 +172,11 @@ public class DedeController : MonoBehaviour
 
         isChatShown = true;
 
-        if (isMissionCompleted && DedeChatCoxPanelComplet != null)
+        if (isMissionCompleted && AnnisaChatCoxPanelComplet != null)
         {
             chatBoxUI?.SetActive(false);
             controllerPanel?.SetActive(true);
-            DedeChatCoxPanelComplet.SetActive(true);
+            AnnisaChatCoxPanelComplet.SetActive(true);
             StartCoroutine(HideCompletePanelAfterDelay());
         }
         else
@@ -172,13 +185,13 @@ public class DedeController : MonoBehaviour
             controllerPanel?.SetActive(false);
         }
 
-        Debug.Log("Player mendekati Dede, menampilkan UI yang sesuai.");
+        Debug.Log("Player mendekati Annisa, menampilkan UI yang sesuai.");
     }
 
     IEnumerator HideCompletePanelAfterDelay()
     {
         yield return new WaitForSeconds(2f);
-        DedeChatCoxPanelComplet?.SetActive(false);
+        AnnisaChatCoxPanelComplet?.SetActive(false);
     }
 
     void HandleTimeOut()
@@ -200,7 +213,7 @@ public class DedeController : MonoBehaviour
         isChatShown = false;
         isMissionCompleted = false;
         isTimeOut = false;
-        DedeChatCoxPanelComplet?.SetActive(false);
+        AnnisaChatCoxPanelComplet?.SetActive(false);
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
         timeManager?.StopTimer();

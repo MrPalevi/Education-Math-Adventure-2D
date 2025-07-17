@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DedeController : MonoBehaviour
+public class DadangController : MonoBehaviour
 {
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -20,7 +21,7 @@ public class DedeController : MonoBehaviour
     public TimeManager timeManager;
 
     [Header("Referensi Objek Misi")]
-    public GameObject DedeChatCoxPanelComplet;
+    public GameObject DadangChatCoxPanelComplet;
     public GameObject chestBox;
 
     [Header("Feedback UI")]
@@ -33,12 +34,15 @@ public class DedeController : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.DeleteAll(); // Menghapus SEMUA data yang tersimpan
+        PlayerPrefs.Save();
+        Debug.Log("Smua playerPrefs di reset");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
-        DedeChatCoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
         Stop?.SetActive(true);
         chestBox?.SetActive(false);
 
@@ -83,7 +87,7 @@ public class DedeController : MonoBehaviour
         isPlayerInRange = false;
         isChatShown = false;
         chatBoxUI?.SetActive(false);
-        DedeChatCoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
     }
 
     public void MulaiMisiPuzzle()
@@ -149,7 +153,7 @@ public class DedeController : MonoBehaviour
         }
 
         isMissionCompleted = true;
-        DedeChatCoxPanelComplet?.SetActive(true);
+        DadangChatCoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
     }
 
@@ -159,11 +163,11 @@ public class DedeController : MonoBehaviour
 
         isChatShown = true;
 
-        if (isMissionCompleted && DedeChatCoxPanelComplet != null)
+        if (isMissionCompleted && DadangChatCoxPanelComplet != null)
         {
             chatBoxUI?.SetActive(false);
             controllerPanel?.SetActive(true);
-            DedeChatCoxPanelComplet.SetActive(true);
+            DadangChatCoxPanelComplet.SetActive(true);
             StartCoroutine(HideCompletePanelAfterDelay());
         }
         else
@@ -178,7 +182,7 @@ public class DedeController : MonoBehaviour
     IEnumerator HideCompletePanelAfterDelay()
     {
         yield return new WaitForSeconds(2f);
-        DedeChatCoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
     }
 
     void HandleTimeOut()
@@ -200,7 +204,7 @@ public class DedeController : MonoBehaviour
         isChatShown = false;
         isMissionCompleted = false;
         isTimeOut = false;
-        DedeChatCoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
         timeManager?.StopTimer();
@@ -213,3 +217,4 @@ public class DedeController : MonoBehaviour
         Debug.Log("Misi di-reset.");
     }
 }
+

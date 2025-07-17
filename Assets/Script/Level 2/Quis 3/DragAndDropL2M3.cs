@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragAndDropL2M3 : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Vector3 _startPosition;
     private Transform _startParent;
@@ -30,12 +30,12 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         _canvasGroup.blocksRaycasts = true;
 
-        DropZone dropZone = eventData.pointerEnter != null ? eventData.pointerEnter.GetComponent<DropZone>() : null;
+        DropZoneL2M3 dropZoneL2M3 = eventData.pointerEnter != null ? eventData.pointerEnter.GetComponent<DropZoneL2M3>() : null;
 
-        if (dropZone != null && !dropZone.IsOccupied())
+        if (dropZoneL2M3 != null && !dropZoneL2M3.IsOccupied())
         {
-            dropZone.PlacePuzzlePiece(gameObject);
-            transform.SetParent(dropZone.transform);
+            dropZoneL2M3.PlacePuzzlePiece(gameObject);
+            transform.SetParent(dropZoneL2M3.transform);
             transform.localPosition = Vector3.zero;
         }
         else

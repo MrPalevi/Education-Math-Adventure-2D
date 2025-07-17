@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e08623fbdef90014bb54d1934501322c
+guid: 9f31e9dc850289c4ebb709de3d7792ae
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Window_0
+      name: house_0
       rect:
         serializedVersion: 2
-        x: 2741
-        y: 2954
-        width: 694
-        height: 389
+        x: 48
+        y: 897
+        width: 690
+        height: 487
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,41 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5cfb3f84099f0e48a8ce7bd985758ab
-      internalID: 1365796462
+      spriteID: 45ff7a54a37118d4995f154cf1397eda
+      internalID: -88006548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Window_1
+      name: pagar 1
       rect:
         serializedVersion: 2
-        x: 3052
-        y: 3578
-        width: 836
-        height: 473
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 1, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 91c5b9e79cc3846418484011be302aa9
-      internalID: -590681326
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_3
-      rect:
-        serializedVersion: 2
-        x: 1807
-        y: 48
-        width: 172
-        height: 149
+        x: 55
+        y: 615
+        width: 751
+        height: 108
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1f4d487e384acb478d1a05f710a3e14
-      internalID: -1650651964
+      spriteID: cbb197f1f78640143ae310e1f5665c6b
+      internalID: 980361659
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: B1
+      name: house_2
       rect:
         serializedVersion: 2
-        x: 902
-        y: 41
-        width: 136
-        height: 130
+        x: 90
+        y: 35
+        width: 888
+        height: 573
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d9560b66783f7b4dbcb145342961533
-      internalID: 1966429254
+      spriteID: 4e5234fbc64f2e64d83d8b69b9e80549
+      internalID: -789371126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: B3
+      name: house_3
       rect:
         serializedVersion: 2
-        x: 1227
-        y: 41
-        width: 136
-        height: 130
+        x: 1329
+        y: 519
+        width: 548
+        height: 568
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60373ee94b2361f4d9cc261758f6874a
-      internalID: -1109665178
+      spriteID: c57804f53d6306e4096436c7483c606d
+      internalID: 1185838339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: B2
+      name: pagar 2
       rect:
         serializedVersion: 2
-        x: 1050
-        y: 74
-        width: 174
-        height: 169
+        x: 65
+        y: 744
+        width: 323
+        height: 108
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,50 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 849b15d9ce0663f4ea7d15f95d5c6d04
-      internalID: -1044667961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_2
-      rect:
-        serializedVersion: 2
-        x: 2311
-        y: 985
-        width: 490
-        height: 253
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 211e3ece946371540a466d515bebe47f
-      internalID: -380792050
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Window_4
-      rect:
-        serializedVersion: 2
-        x: 2136
-        y: 3326
-        width: 328
-        height: 446
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ad227c46da87874c8dce022b94d9b41
-      internalID: -1340263692
+      spriteID: 880dfa63442805e48bddef32980dcb7f
+      internalID: 106103229
       vertices: []
       indices: 
       edges: []
@@ -288,15 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      B Empety: -695990608
-      B1: 1966429254
-      B2: -1044667961
-      B3: -1109665178
-      Window_0: 1365796462
-      Window_1: -590681326
-      Window_2: -380792050
-      Window_3: -1650651964
-      Window_4: -1340263692
+      house_0: -88006548
+      house_2: -789371126
+      house_3: 1185838339
+      pagar 1: 980361659
+      pagar 2: 106103229
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
