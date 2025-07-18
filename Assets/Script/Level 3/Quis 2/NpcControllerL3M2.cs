@@ -28,6 +28,7 @@ public class NpcControllerL3M2 : MonoBehaviour
     public GameObject feedbackBenar;
     public GameObject feedbackSalah;
     public float feedbackDuration = 2f;
+    public GameObject bridge;
 
     [Header("Pengaturan Skor")]
     public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
@@ -45,6 +46,7 @@ public class NpcControllerL3M2 : MonoBehaviour
         AnnisaChatBoxPanelComplet?.SetActive(false);
         Stop?.SetActive(true);
         chestBox?.SetActive(false);
+        bridge?.SetActive(false);
 
         if (timeManager != null)
             timeManager.OnTimeOut += HandleTimeOut;
@@ -153,6 +155,7 @@ public class NpcControllerL3M2 : MonoBehaviour
         isMissionCompleted = true;
         AnnisaChatBoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
+        bridge?.SetActive(true);
     }
 
     void ShowChat()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NpcControllerL3M3 : MonoBehaviour
+public class NpcControllerL4M2 : MonoBehaviour
 {
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -28,9 +28,10 @@ public class NpcControllerL3M3 : MonoBehaviour
     public GameObject feedbackBenar;
     public GameObject feedbackSalah;
     public float feedbackDuration = 2f;
+    // public GameObject bridge;
 
     [Header("Pengaturan Skor")]
-    public string namaPlayerPrefsScore = "L3M3"; // ✅ Bisa diatur dari Inspector
+    public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
 
     void Start()
     {
@@ -45,6 +46,7 @@ public class NpcControllerL3M3 : MonoBehaviour
         DadangChatBoxPanelComplet?.SetActive(false);
         Stop?.SetActive(true);
         chestBox?.SetActive(false);
+        // bridge?.SetActive(false);
 
         if (timeManager != null)
             timeManager.OnTimeOut += HandleTimeOut;
@@ -123,10 +125,10 @@ public class NpcControllerL3M3 : MonoBehaviour
         else
         {
             feedbackSalah?.SetActive(true);
-            chestBox?.SetActive(false); 
+            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
         }
 
-        
+        // Simpan skor jika belum pernah disimpan
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
@@ -153,6 +155,7 @@ public class NpcControllerL3M3 : MonoBehaviour
         isMissionCompleted = true;
         DadangChatBoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
+        // bridge?.SetActive(true);
     }
 
     void ShowChat()

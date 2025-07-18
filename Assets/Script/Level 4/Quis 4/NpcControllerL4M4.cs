@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NpcControllerL3M3 : MonoBehaviour
+public class NpcControllerL4M4 : MonoBehaviour
 {
     private Transform player;
     private SpriteRenderer spriteRenderer;
@@ -17,11 +17,11 @@ public class NpcControllerL3M3 : MonoBehaviour
     private bool isTimeOut = false;
 
     [Header("Misi Puzzle")]
-    public GameObject panelSoal;
+    public GameObject panelPuzzle;
     public TimeManager timeManager;
 
     [Header("Referensi Objek Misi")]
-    public GameObject DadangChatBoxPanelComplet;
+    public GameObject DadangChatCoxPanelComplet;
     public GameObject chestBox;
 
     [Header("Feedback UI")]
@@ -30,7 +30,7 @@ public class NpcControllerL3M3 : MonoBehaviour
     public float feedbackDuration = 2f;
 
     [Header("Pengaturan Skor")]
-    public string namaPlayerPrefsScore = "L3M3"; // ✅ Bisa diatur dari Inspector
+    public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
 
     void Start()
     {
@@ -42,7 +42,7 @@ public class NpcControllerL3M3 : MonoBehaviour
 
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
-        DadangChatBoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
         Stop?.SetActive(true);
         chestBox?.SetActive(false);
 
@@ -64,6 +64,8 @@ public class NpcControllerL3M3 : MonoBehaviour
         {
             ShowChat();
         }
+
+        if (Input.GetKeyDown(KeyCode.R)) ResetMisi();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -85,13 +87,13 @@ public class NpcControllerL3M3 : MonoBehaviour
         isPlayerInRange = false;
         isChatShown = false;
         chatBoxUI?.SetActive(false);
-        DadangChatBoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
     }
 
     public void MulaiMisiPuzzle()
     {
         chatBoxUI?.SetActive(false);
-        panelSoal?.SetActive(true);
+        panelPuzzle?.SetActive(true);
         controllerPanel?.SetActive(false);
         isTimeOut = false;
         isMissionCompleted = false;
@@ -107,7 +109,7 @@ public class NpcControllerL3M3 : MonoBehaviour
     public void OnPuzzleCheckResult(bool isCorrect)
     {
         timeManager?.StopTimer();
-        panelSoal?.SetActive(false);
+        panelPuzzle?.SetActive(false);
         Stop.SetActive(false);
         StartCoroutine(ShowFeedbackThenComplete(isCorrect));
     }
@@ -123,10 +125,10 @@ public class NpcControllerL3M3 : MonoBehaviour
         else
         {
             feedbackSalah?.SetActive(true);
-            chestBox?.SetActive(false); 
+            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
         }
 
-        
+        // Simpan skor jika belum pernah disimpan
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
@@ -151,7 +153,7 @@ public class NpcControllerL3M3 : MonoBehaviour
         }
 
         isMissionCompleted = true;
-        DadangChatBoxPanelComplet?.SetActive(true);
+        DadangChatCoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
     }
 
@@ -161,11 +163,11 @@ public class NpcControllerL3M3 : MonoBehaviour
 
         isChatShown = true;
 
-        if (isMissionCompleted && DadangChatBoxPanelComplet != null)
+        if (isMissionCompleted && DadangChatCoxPanelComplet != null)
         {
             chatBoxUI?.SetActive(false);
             controllerPanel?.SetActive(true);
-            DadangChatBoxPanelComplet.SetActive(true);
+            DadangChatCoxPanelComplet.SetActive(true);
             StartCoroutine(HideCompletePanelAfterDelay());
         }
         else
@@ -180,12 +182,12 @@ public class NpcControllerL3M3 : MonoBehaviour
     IEnumerator HideCompletePanelAfterDelay()
     {
         yield return new WaitForSeconds(2f);
-        DadangChatBoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
     }
 
     void HandleTimeOut()
     {
-        panelSoal?.SetActive(false);
+        panelPuzzle?.SetActive(false);
         chatBoxUI?.SetActive(false);
         isChatShown = false;
         isMissionCompleted = false;
@@ -196,17 +198,23 @@ public class NpcControllerL3M3 : MonoBehaviour
 
     public void ResetMisi()
     {
-        panelSoal?.SetActive(false);
+        panelPuzzle?.SetActive(false);
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
         isChatShown = false;
         isMissionCompleted = false;
         isTimeOut = false;
-        DadangChatBoxPanelComplet?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
         timeManager?.StopTimer();
-        Debug.Log("Misi di-reset."); 
+
+        foreach (DropZone dz in FindObjectsOfType<DropZone>())
+        {
+            dz.Clear();
+        }
+
+        Debug.Log("Misi di-reset.");
     }
 }
 
