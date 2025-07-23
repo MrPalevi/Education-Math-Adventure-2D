@@ -1,0 +1,233 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NpcControllerL7M4 : MonoBehaviour
+{
+    private Transform player;
+    private SpriteRenderer spriteRenderer;
+    public float detectionRange = 5f;
+
+    public GameObject chatBoxUI;
+    public GameObject controllerPanel;
+    public GameObject Stop;
+    private bool isChatShown = false;
+    private bool isPlayerInRange = false;
+    private bool isMissionCompleted = false;
+    private bool isTimeOut = false;
+
+    [Header("Misi Puzzle")]
+    public GameObject panelPuzzle;
+    public TimeManager timeManager;
+
+    [Header("Referensi Objek Misi")]
+    public GameObject DadangChatCoxPanelComplet;
+    public GameObject chestBox;
+
+    [Header("Feedback UI")]
+    public GameObject feedbackBenar;
+    public GameObject feedbackSalah;
+    public float feedbackDuration = 2f;
+
+    [Header("Pengaturan Skor")]
+    public string namaPlayerPrefsScore = "L7M3"; // ✅ Bisa diatur dari Inspector
+
+    // public GameObject kartuBox;
+    // public Vector2 offsetkartuBox = new Vector2(0f, 0f); // Bisa diubah di Inspector
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        chatBoxUI?.SetActive(false);
+        controllerPanel?.SetActive(true);
+        DadangChatCoxPanelComplet?.SetActive(false);
+        Stop?.SetActive(true);
+        chestBox?.SetActive(false);
+
+        if (timeManager != null)
+            timeManager.OnTimeOut += HandleTimeOut;
+    }
+
+    void Update()
+    {
+        if (player == null) return;
+
+        float distance = Vector2.Distance(player.position, transform.position);
+        if (distance <= detectionRange)
+        {
+            spriteRenderer.flipX = player.position.x < transform.position.x;
+        }
+
+        if (isPlayerInRange && !isChatShown && !isMissionCompleted)
+        {
+            ShowChat();
+        }
+
+        // Vector3 kartuPos = transform.position;
+
+        //     if (spriteRenderer.flipX)
+        //     {
+        //         kartuPos += new Vector3(-offsetkartuBox.x, offsetkartuBox.y, 0f); // Player dari kanan → chest di kiri
+        //     }
+        //     else
+        //     {
+        //         kartuPos += new Vector3(offsetkartuBox.x, offsetkartuBox.y, 0f); // Player dari kiri → chest di kanan
+        //     }
+
+        //     kartuBox.transform.position = kartuPos;
+        //     kartuBox?.SetActive(true);
+
+        if (Input.GetKeyDown(KeyCode.R)) ResetMisi();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player")) return;
+
+        isPlayerInRange = true;
+
+        if (!isChatShown && !isTimeOut)
+        {
+            ShowChat();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player")) return;
+
+        isPlayerInRange = false;
+        isChatShown = false;
+        chatBoxUI?.SetActive(false);
+        DadangChatCoxPanelComplet?.SetActive(false);
+    }
+
+    public void MulaiMisiPuzzle()
+    {
+        chatBoxUI?.SetActive(false);
+        panelPuzzle?.SetActive(true);
+        controllerPanel?.SetActive(false);
+        isTimeOut = false;
+        isMissionCompleted = false;
+        timeManager?.StartTimer();
+    }
+
+    public void TolakMisiPuzzle()
+    {
+        chatBoxUI?.SetActive(false);
+        controllerPanel?.SetActive(true);
+    }
+
+    public void OnPuzzleCheckResult(bool isCorrect)
+    {
+        timeManager?.StopTimer();
+        panelPuzzle?.SetActive(false);
+        Stop.SetActive(false);
+        StartCoroutine(ShowFeedbackThenComplete(isCorrect));
+    }
+
+    IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+    {
+        int score = isCorrect ? 100 : 0;
+
+        if (isCorrect)
+        {
+            feedbackBenar?.SetActive(true);
+        }
+        else
+        {
+            feedbackSalah?.SetActive(true);
+            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
+        }
+
+        // Simpan skor jika belum pernah disimpan
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
+        }
+        else
+        {
+            Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
+        }
+
+        yield return new WaitForSeconds(feedbackDuration);
+
+        feedbackBenar?.SetActive(false);
+        feedbackSalah?.SetActive(false);
+
+        // ✅ Tunda 0.5 detik baru munculkan chestBox (hanya jika benar)
+        if (isCorrect)
+        {
+            yield return new WaitForSeconds(0.5f);
+            chestBox?.SetActive(true);
+        }
+
+        isMissionCompleted = true;
+        DadangChatCoxPanelComplet?.SetActive(true);
+        controllerPanel?.SetActive(true);
+    }
+
+    void ShowChat()
+    {
+        if (isTimeOut) return;
+
+        isChatShown = true;
+
+        if (isMissionCompleted && DadangChatCoxPanelComplet != null)
+        {
+            chatBoxUI?.SetActive(false);
+            controllerPanel?.SetActive(true);
+            DadangChatCoxPanelComplet.SetActive(true);
+            StartCoroutine(HideCompletePanelAfterDelay());
+        }
+        else
+        {
+            chatBoxUI?.SetActive(true);
+            controllerPanel?.SetActive(false);
+        }
+
+        Debug.Log("Player mendekati Dede, menampilkan UI yang sesuai.");
+    }
+
+    IEnumerator HideCompletePanelAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        DadangChatCoxPanelComplet?.SetActive(false);
+    }
+
+    void HandleTimeOut()
+    {
+        panelPuzzle?.SetActive(false);
+        chatBoxUI?.SetActive(false);
+        isChatShown = false;
+        isMissionCompleted = false;
+        isTimeOut = true;
+
+        Debug.Log("Waktu habis, misi di-reset.");
+    }
+
+    public void ResetMisi()
+    {
+        panelPuzzle?.SetActive(false);
+        chatBoxUI?.SetActive(false);
+        controllerPanel?.SetActive(true);
+        isChatShown = false;
+        isMissionCompleted = false;
+        isTimeOut = false;
+        DadangChatCoxPanelComplet?.SetActive(false);
+        feedbackBenar?.SetActive(false);
+        feedbackSalah?.SetActive(false);
+        timeManager?.StopTimer();
+
+        foreach (DropZone dz in FindObjectsOfType<DropZone>())
+        {
+            dz.Clear();
+        }
+
+        Debug.Log("Misi di-reset.");
+    }
+}

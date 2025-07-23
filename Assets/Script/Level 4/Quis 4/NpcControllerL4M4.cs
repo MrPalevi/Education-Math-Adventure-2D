@@ -21,7 +21,7 @@ public class NpcControllerL4M4 : MonoBehaviour
     public TimeManager timeManager;
 
     [Header("Referensi Objek Misi")]
-    public GameObject DadangChatCoxPanelComplet;
+    public GameObject DedeChatCoxPanelComplet;
     public GameObject chestBox;
 
     [Header("Feedback UI")]
@@ -30,19 +30,19 @@ public class NpcControllerL4M4 : MonoBehaviour
     public float feedbackDuration = 2f;
 
     [Header("Pengaturan Skor")]
-    public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
+    public string namaPlayerPrefsScore = "L4M4"; // ✅ Bisa diatur dari Inspector
+
+    [Header("Pengaturan Posisi ChestBox")]
+    public Vector2 offsetChestBox = new Vector2(2f, 0f); // Bisa diubah di Inspector
 
     void Start()
     {
-        PlayerPrefs.DeleteAll(); // Menghapus SEMUA data yang tersimpan
-        PlayerPrefs.Save();
-        Debug.Log("Smua playerPrefs di reset");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
-        DadangChatCoxPanelComplet?.SetActive(false);
+        DedeChatCoxPanelComplet?.SetActive(false);
         Stop?.SetActive(true);
         chestBox?.SetActive(false);
 
@@ -87,7 +87,7 @@ public class NpcControllerL4M4 : MonoBehaviour
         isPlayerInRange = false;
         isChatShown = false;
         chatBoxUI?.SetActive(false);
-        DadangChatCoxPanelComplet?.SetActive(false);
+        DedeChatCoxPanelComplet?.SetActive(false);
     }
 
     public void MulaiMisiPuzzle()
@@ -149,11 +149,25 @@ public class NpcControllerL4M4 : MonoBehaviour
         if (isCorrect)
         {
             yield return new WaitForSeconds(0.5f);
+
+            // ⬇️ Tentukan posisi baru berdasarkan arah NPC
+            Vector3 chestPos = transform.position;
+
+            if (spriteRenderer.flipX)
+            {
+                chestPos += new Vector3(-offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kanan → chest di kiri
+            }
+            else
+            {
+                chestPos += new Vector3(offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kiri → chest di kanan
+            }
+
+            chestBox.transform.position = chestPos;
             chestBox?.SetActive(true);
         }
 
         isMissionCompleted = true;
-        DadangChatCoxPanelComplet?.SetActive(true);
+        DedeChatCoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
     }
 
@@ -163,11 +177,11 @@ public class NpcControllerL4M4 : MonoBehaviour
 
         isChatShown = true;
 
-        if (isMissionCompleted && DadangChatCoxPanelComplet != null)
+        if (isMissionCompleted && DedeChatCoxPanelComplet != null)
         {
             chatBoxUI?.SetActive(false);
             controllerPanel?.SetActive(true);
-            DadangChatCoxPanelComplet.SetActive(true);
+            DedeChatCoxPanelComplet.SetActive(true);
             StartCoroutine(HideCompletePanelAfterDelay());
         }
         else
@@ -182,7 +196,7 @@ public class NpcControllerL4M4 : MonoBehaviour
     IEnumerator HideCompletePanelAfterDelay()
     {
         yield return new WaitForSeconds(2f);
-        DadangChatCoxPanelComplet?.SetActive(false);
+        DedeChatCoxPanelComplet?.SetActive(false);
     }
 
     void HandleTimeOut()
@@ -204,7 +218,7 @@ public class NpcControllerL4M4 : MonoBehaviour
         isChatShown = false;
         isMissionCompleted = false;
         isTimeOut = false;
-        DadangChatCoxPanelComplet?.SetActive(false);
+        DedeChatCoxPanelComplet?.SetActive(false);
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
         timeManager?.StopTimer();

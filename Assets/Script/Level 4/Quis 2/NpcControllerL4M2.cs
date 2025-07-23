@@ -33,6 +33,10 @@ public class NpcControllerL4M2 : MonoBehaviour
     [Header("Pengaturan Skor")]
     public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
 
+    [Header("Pengaturan Posisi ChestBox")]
+    public Vector2 offsetChestBox = new Vector2(2f, 0f); // Bisa diubah di Inspector
+
+
     void Start()
     {
         PlayerPrefs.DeleteAll(); // Menghapus SEMUA data yang tersimpan
@@ -145,13 +149,25 @@ public class NpcControllerL4M2 : MonoBehaviour
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
 
-        // ✅ Tunda 0.5 detik baru munculkan chestBox (hanya jika benar)
         if (isCorrect)
         {
             yield return new WaitForSeconds(0.5f);
+
+            // ⬇️ Tentukan posisi baru berdasarkan arah NPC
+            Vector3 chestPos = transform.position;
+
+            if (spriteRenderer.flipX)
+            {
+                chestPos += new Vector3(-offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kanan → chest di kiri
+            }
+            else
+            {
+                chestPos += new Vector3(offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kiri → chest di kanan
+            }
+
+            chestBox.transform.position = chestPos;
             chestBox?.SetActive(true);
         }
-
         isMissionCompleted = true;
         DadangChatBoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);

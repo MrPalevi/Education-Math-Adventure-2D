@@ -31,13 +31,14 @@ public class NpcControllerL4M3 : MonoBehaviour
     // public GameObject bridge;
 
     [Header("Pengaturan Skor")]
-    public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
+    public string namaPlayerPrefsScore = "L4M3"; 
+
+    [Header("Pengaturan Posisi ChestBox")]
+    public Vector2 offsetChestBox = new Vector2(2f, 0f); 
+
 
     void Start()
     {
-        PlayerPrefs.DeleteAll(); // Menghapus SEMUA data yang tersimpan
-        PlayerPrefs.Save();
-        Debug.Log("Smua playerPrefs di reset");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -149,6 +150,20 @@ public class NpcControllerL4M3 : MonoBehaviour
         if (isCorrect)
         {
             yield return new WaitForSeconds(0.5f);
+
+            // ⬇️ Tentukan posisi baru berdasarkan arah NPC
+            Vector3 chestPos = transform.position;
+
+            if (spriteRenderer.flipX)
+            {
+                chestPos += new Vector3(-offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kanan → chest di kiri
+            }
+            else
+            {
+                chestPos += new Vector3(offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kiri → chest di kanan
+            }
+
+            chestBox.transform.position = chestPos;
             chestBox?.SetActive(true);
         }
 
