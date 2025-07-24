@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -14,11 +15,18 @@ public class MainMenuManager : MonoBehaviour
     }
 
     [Header("Panel UI")]
+    public GameObject judulGame;
+    public GameObject BGprofile;
+    public GameObject panelButton;
     public GameObject panelInputNama;
     public GameObject panelLevel;
     public GameObject panelSetting;
     public GameObject panelAbout;
     public GameObject panelProfile;
+    public GameObject panelWelcome;
+
+    [Header("Panel UI")]
+    public GameObject panelProgres;
 
     [Header("Input & Display Nama")]
     public TMP_InputField inputFieldNama;       
@@ -31,8 +39,18 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        if (panelWelcome != null)
+            panelWelcome.SetActive(false);
+
         CekNamaUser();
         CekUnlockLevel();
+
+        string targetPanel = PlayerPrefs.GetString("MainMenuTargetPanel", "");
+        if (targetPanel == "Level")
+        {
+            BukaPanelLevel();
+            PlayerPrefs.DeleteKey("MainMenuTargetPanel"); // Hapus agar tidak berulang
+        }
     }
 
     void CekNamaUser()
@@ -65,6 +83,8 @@ public class MainMenuManager : MonoBehaviour
                 textTmproNamaUser.text = nama;
 
             panelInputNama?.SetActive(false);
+            if (panelWelcome != null)
+                panelWelcome.SetActive(true); // Tampilkan panel selamat datang
         }
         else
         {
@@ -124,11 +144,48 @@ public class MainMenuManager : MonoBehaviour
 
     private void ShowOnly(GameObject panelToShow)
     {
+        judulGame?.SetActive(false);
+        BGprofile?.SetActive(false);
+        panelButton?.SetActive(false);
         panelLevel?.SetActive(false);
         panelSetting?.SetActive(false);
         panelAbout?.SetActive(false);
         panelProfile?.SetActive(false);
 
         panelToShow?.SetActive(true);
+    }
+
+    public void TutupPanelWelcome()
+    {
+        if (panelWelcome != null)
+            panelWelcome.SetActive(false);
+    }
+
+    public void KembaliKeMenuUtama()
+    {
+        judulGame?.SetActive(true);
+        BGprofile?.SetActive(true);
+        panelButton?.SetActive(true);
+        panelLevel?.SetActive(false);
+        panelSetting?.SetActive(false);
+        panelAbout?.SetActive(false);
+        panelProfile?.SetActive(false);
+    }
+
+    public void PanelProgres()
+    {
+        if (panelProgres != null )
+        {
+            panelProgres.SetActive(!panelProgres.activeSelf);
+        }
+
+    }
+
+    public void LoadSceneName(string sceneName)
+    {
+        if(!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

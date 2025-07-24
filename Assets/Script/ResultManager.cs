@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ResultManager : MonoBehaviour
 {
@@ -70,5 +71,11 @@ public class ResultManager : MonoBehaviour
         }
 
         panelResult?.SetActive(true);
+    }
+
+    public void LevelMenu()
+    {
+        PlayerPrefs.SetString("MainMenuTargetPanel", "Level");
+        SceneManager.LoadScene("MainMenu");
     }
 }
