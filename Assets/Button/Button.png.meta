@@ -286,7 +286,7 @@ TextureImporter:
         width: 195
         height: 182
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -294,6 +294,111 @@ TextureImporter:
       bones: []
       spriteID: a8c5ba195428b0247a0dfb6cca76b63e
       internalID: 1538698784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Setting
+      rect:
+        serializedVersion: 2
+        x: 3289
+        y: 2539
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2c418ce33cf17e4997cb4c39a0f8f43
+      internalID: -908189859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: About
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 1667
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e2195e3bb35ec640ac59bd3802e20b6
+      internalID: 750256438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Music
+      rect:
+        serializedVersion: 2
+        x: 2344
+        y: 1013
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c819dd80099f1a144a6b1da5d6c2cb2c
+      internalID: -509160651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui
+      rect:
+        serializedVersion: 2
+        x: 2342
+        y: 794
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2c078b2219841b45ad8242d27a17153
+      internalID: -2030008578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Save button
+      rect:
+        serializedVersion: 2
+        x: 2343
+        y: 1230
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32d8d6c198b764541a356f155e390a61
+      internalID: -420897138
       vertices: []
       indices: 
       edges: []
@@ -309,15 +414,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      About: 750256438
       Arraw Kanan: 1902355507
       Arraw Kiri: 2021977453
       Button Pause: 17667389
       Exit: -1445362634
       Jump: 1301055558
       Level: 1538698784
+      Music: -509160651
       Play: -1907766330
       Restart: -1320614343
       Restart 1: -664917209
+      Save button: -420897138
+      Setting: -908189859
+      ui: -2030008578
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
