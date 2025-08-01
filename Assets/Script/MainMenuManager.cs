@@ -8,10 +8,17 @@ public class MainMenuManager : MonoBehaviour
     [System.Serializable]
     public class LevelUnlockData
     {
-        public string playerPrefsKey;           // Nama key yang dicek
-        public Button levelButton;              // Tombol level
-        public GameObject imageLock;            // Gambar kunci
-        public GameObject[] imageStars = new GameObject[3];  // Bintang (maks 3)
+        public string playerPrefsKey;              
+        public Button levelButton;                 
+        public GameObject imageLock;               
+        public GameObject[] imageStars = new GameObject[3];
+
+        public int scoreFor1Star = 100;            
+        public int scoreFor2Stars = 200;           
+        public int scoreFor3Stars = 300;
+
+        public GameObject[] imageArchiveAngka = new GameObject[2];
+        public Image[] imageArchiveProfile = new Image[2];
     }
 
     [Header("Panel UI")]
@@ -24,23 +31,53 @@ public class MainMenuManager : MonoBehaviour
     public GameObject panelAbout;
     public GameObject panelProfile;
     public GameObject panelWelcome;
+    public GameObject panelArchive;
+    public GameObject panelSelamat;
 
     [Header("Panel UI")]
     public GameObject panelProgres;
+    public GameObject panelAngka;
 
     [Header("Input & Display Nama")]
     public TMP_InputField inputFieldNama;       
     public TMP_Text textTmproNamaUser;          
 
     [Header("Level Unlock Settings")]
-    public LevelUnlockData[] levelUnlockList;   // Daftar level yang ingin dicek
+    public LevelUnlockData[] levelUnlockList;
 
     private const string playerPrefsKey = "NamaUser";
+    AudioManager audioManager;
+    private bool panelSelamatSiap = false;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     void Start()
     {
         if (panelWelcome != null)
             panelWelcome.SetActive(false);
+
+        if (panelSelamat != null)
+            panelSelamat.SetActive(false);
+
+        // Restore archive profile image color if needed
+        for (int i = 0; i < levelUnlockList.Length; i++)
+        {
+            string colorKey = "ArchiveProfileUpdated_" + levelUnlockList[i].playerPrefsKey;
+            if (PlayerPrefs.GetInt(colorKey, 0) == 1)
+            {
+                if (levelUnlockList[i].imageArchiveProfile != null)
+                {
+                    foreach (var img in levelUnlockList[i].imageArchiveProfile)
+                    {
+                        if (img != null)
+                            img.color = new Color32(255, 255, 255, 255);
+                    }
+                }
+            }
+        }
 
         CekNamaUser();
         CekUnlockLevel();
@@ -49,7 +86,7 @@ public class MainMenuManager : MonoBehaviour
         if (targetPanel == "Level")
         {
             BukaPanelLevel();
-            PlayerPrefs.DeleteKey("MainMenuTargetPanel"); // Hapus agar tidak berulang
+            PlayerPrefs.DeleteKey("MainMenuTargetPanel");
         }
     }
 
@@ -73,6 +110,7 @@ public class MainMenuManager : MonoBehaviour
     public void SimpanNama()
     {
         string nama = inputFieldNama.text.Trim();
+        audioManager.PlaySFX(audioManager.button);
 
         if (!string.IsNullOrEmpty(nama))
         {
@@ -84,7 +122,9 @@ public class MainMenuManager : MonoBehaviour
 
             panelInputNama?.SetActive(false);
             if (panelWelcome != null)
-                panelWelcome.SetActive(true); // Tampilkan panel selamat datang
+                panelWelcome.SetActive(true);
+
+            audioManager.PlaySFX(audioManager.Welcome);
         }
         else
         {
@@ -94,9 +134,10 @@ public class MainMenuManager : MonoBehaviour
 
     void CekUnlockLevel()
     {
-        foreach (LevelUnlockData data in levelUnlockList)
+        for (int i = 0; i < levelUnlockList.Length; i++)
         {
-            int score = PlayerPrefs.GetInt(data.playerPrefsKey, 0); // default 0
+            LevelUnlockData data = levelUnlockList[i];
+            int score = PlayerPrefs.GetInt(data.playerPrefsKey, 0);
 
             if (data.levelButton != null)
                 data.levelButton.interactable = false;
@@ -104,7 +145,6 @@ public class MainMenuManager : MonoBehaviour
             if (data.imageLock != null)
                 data.imageLock.SetActive(true);
 
-            // Matikan semua bintang dulu
             if (data.imageStars != null)
             {
                 foreach (var star in data.imageStars)
@@ -114,29 +154,80 @@ public class MainMenuManager : MonoBehaviour
                 }
             }
 
-            if (score >= 100)
+            int bintang = 0;
+            if (score >= data.scoreFor3Stars)
+                bintang = 3;
+            else if (score >= data.scoreFor2Stars)
+                bintang = 2;
+            else if (score >= data.scoreFor1Star)
+                bintang = 1;
+
+            for (int s = 0; s < bintang && s < data.imageStars.Length; s++)
+            {
+                if (data.imageStars[s] != null)
+                    data.imageStars[s].SetActive(true);
+            }
+
+            if (i == 0 || PlayerPrefs.GetInt(levelUnlockList[i - 1].playerPrefsKey, 0) >= levelUnlockList[i - 1].scoreFor1Star)
             {
                 if (data.levelButton != null)
                     data.levelButton.interactable = true;
-
                 if (data.imageLock != null)
                     data.imageLock.SetActive(false);
             }
 
-            // Aktifkan bintang berdasarkan nilai
-            if (data.imageStars != null)
+            string archiveKey = "ArchiveShown_" + data.playerPrefsKey;
+            string colorKey = "ArchiveProfileUpdated_" + data.playerPrefsKey;
+
+            if (score >= data.scoreFor1Star && PlayerPrefs.GetInt(archiveKey, 0) == 0)
             {
-                if (score >= 100 && data.imageStars.Length > 0 && data.imageStars[0] != null)
-                    data.imageStars[0].SetActive(true);
-                if (score >= 200 && data.imageStars.Length > 1 && data.imageStars[1] != null)
-                    data.imageStars[1].SetActive(true);
-                if (score > 300 && data.imageStars.Length > 2 && data.imageStars[2] != null)
-                    data.imageStars[2].SetActive(true);
+                if (panelArchive != null)
+                    panelArchive.SetActive(true);
+
+                if (data.imageArchiveAngka != null)
+                {
+                    foreach (var angka in data.imageArchiveAngka)
+                    {
+                        if (angka != null)
+                            angka.SetActive(true);
+                    }
+                }
+
+                if (data.imageArchiveProfile != null)
+                {
+                    foreach (var img in data.imageArchiveProfile)
+                    {
+                        if (img != null)
+                            img.color = new Color32(255, 255, 255, 255);
+                    }
+                }
+
+                PlayerPrefs.SetInt(archiveKey, 1);
+                PlayerPrefs.SetInt(colorKey, 1);
+                PlayerPrefs.Save();
+
+                if (i == levelUnlockList.Length - 1 && PlayerPrefs.GetInt("SelamatDitampilkan", 0) == 0)
+                {
+                    panelSelamatSiap = true;
+                }
+            }
+            else
+            {
+                if (panelArchive != null && !panelArchive.activeSelf)
+                {
+                    if (data.imageArchiveAngka != null)
+                    {
+                        foreach (var angka in data.imageArchiveAngka)
+                        {
+                            if (angka != null)
+                                angka.SetActive(false);
+                        }
+                    }
+                }
             }
         }
     }
 
-    // Panel navigasi
     public void BukaPanelLevel() => ShowOnly(panelLevel);
     public void BukaPanelSetting() => ShowOnly(panelSetting);
     public void BukaPanelAbout() => ShowOnly(panelAbout);
@@ -153,12 +244,15 @@ public class MainMenuManager : MonoBehaviour
         panelProfile?.SetActive(false);
 
         panelToShow?.SetActive(true);
+        audioManager.PlaySFX(audioManager.button);
     }
 
     public void TutupPanelWelcome()
     {
         if (panelWelcome != null)
             panelWelcome.SetActive(false);
+
+        audioManager.PlaySFX(audioManager.button);
     }
 
     public void KembaliKeMenuUtama()
@@ -170,22 +264,75 @@ public class MainMenuManager : MonoBehaviour
         panelSetting?.SetActive(false);
         panelAbout?.SetActive(false);
         panelProfile?.SetActive(false);
+        audioManager.PlaySFX(audioManager.button);
     }
 
     public void PanelProgres()
     {
-        if (panelProgres != null )
+        if (panelProgres != null && panelAngka != null)
         {
-            panelProgres.SetActive(!panelProgres.activeSelf);
-        }
+            bool isProgresActive = !panelProgres.activeSelf;
+            panelProgres.SetActive(isProgresActive);
 
+            panelAngka.SetActive(!isProgresActive);
+            audioManager.PlaySFX(audioManager.button);
+        }
     }
 
     public void LoadSceneName(string sceneName)
     {
-        if(!string.IsNullOrEmpty(sceneName))
+        if (!string.IsNullOrEmpty(sceneName))
         {
             SceneManager.LoadScene(sceneName);
+            audioManager.PlaySFX(audioManager.button);
         }
+    }
+
+    public void TutupPanelArchive()
+    {
+        if (panelArchive != null)
+            panelArchive.SetActive(false);
+
+        foreach (var data in levelUnlockList)
+        {
+            if (data.imageArchiveAngka != null)
+            {
+                foreach (var angka in data.imageArchiveAngka)
+                {
+                    if (angka != null)
+                        angka.SetActive(false);
+                }
+            }
+        }
+
+        if (panelSelamatSiap && panelSelamat != null && PlayerPrefs.GetInt("SelamatDitampilkan", 0) == 0)
+        {
+            panelSelamat.SetActive(true);
+            PlayerPrefs.SetInt("SelamatDitampilkan", 1);
+            PlayerPrefs.Save();
+        }
+
+        audioManager.PlaySFX(audioManager.button);
+    }
+
+    public void ResumePermainan()
+    {
+        if (PlayerPrefs.HasKey("LastScenePlayed"))
+        {
+            string sceneToLoad = PlayerPrefs.GetString("LastScenePlayed");
+            SceneManager.LoadScene(sceneToLoad);
+            audioManager.PlaySFX(audioManager.button);
+        }
+        else
+        {
+            Debug.Log("Belum ada data scene disimpan, mulai dari Level 1.");
+            SceneManager.LoadScene("Level 1");
+            audioManager.PlaySFX(audioManager.button);
+        }
+    }
+
+    public void TutupPanelSelamat()
+    {
+        panelSelamat.SetActive(false);
     }
 }

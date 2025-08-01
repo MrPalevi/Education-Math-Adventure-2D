@@ -7253,6 +7253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53693da9522872f4bb57137bed75a8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: L8M3
+  sceneName: Level 8
   spriteOff: {fileID: 21300000, guid: 09690c3d68742eb4d87b746f91a0e76a, type: 3}
   spriteOn: {fileID: 21300000, guid: 6cea42c1d32fabe4c99d5cafec3161a4, type: 3}
 --- !u!61 &127009798
@@ -13881,10 +13883,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Bisakah kamu membatu saya mencari
-
-    mana yang lebih banyak antara kucing
-    dan kelinci..'
+  m_text: Bisakah kamu membatu saya menghitung jumlah balok dan menjumlahkannya ..
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
   m_sharedMaterial: {fileID: 244901386658407051, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
@@ -42970,6 +42969,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53693da9522872f4bb57137bed75a8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: L8M1
+  sceneName: Level 8
   spriteOff: {fileID: 21300000, guid: 09690c3d68742eb4d87b746f91a0e76a, type: 3}
   spriteOn: {fileID: 21300000, guid: 6cea42c1d32fabe4c99d5cafec3161a4, type: 3}
 --- !u!61 &455117424
@@ -46150,8 +46151,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -47730,6 +47731,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53693da9522872f4bb57137bed75a8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: L8M2
+  sceneName: Level 8
   spriteOff: {fileID: 21300000, guid: 09690c3d68742eb4d87b746f91a0e76a, type: 3}
   spriteOn: {fileID: 21300000, guid: 6cea42c1d32fabe4c99d5cafec3161a4, type: 3}
 --- !u!61 &538402074
@@ -63651,8 +63654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bisakah kamu membatu saya menghitung jumlah ikan di dalam akuarium ini
-    ..
+  m_text: Bisakah kamu membatu saya menghitung bilangan puluhan ..
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
   m_sharedMaterial: {fileID: 244901386658407051, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
@@ -71673,6 +71675,7 @@ GameObject:
   - component: {fileID: 887136349}
   - component: {fileID: 887136351}
   - component: {fileID: 887136350}
+  - component: {fileID: 887136352}
   m_Layer: 5
   m_Name: Button Level
   m_TagString: Untagged
@@ -71737,6 +71740,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 887136348}
   m_CullTransparentMesh: 1
+--- !u!114 &887136352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887136348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 887136350}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1470188446}
+        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
+        m_MethodName: LevelMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &890317662
 GameObject:
   m_ObjectHideFlags: 0
@@ -74073,8 +74132,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -75442,8 +75501,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -78515,8 +78574,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -81833,8 +81892,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -102144,8 +102203,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -108303,6 +108362,7 @@ GameObject:
   - component: {fileID: 1470188440}
   - component: {fileID: 1470188445}
   - component: {fileID: 1470188446}
+  - component: {fileID: 1470188447}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -108391,7 +108451,7 @@ MonoBehaviour:
   - L8M4
   playerPrefsScoreFinalKey: TotalFinalScoreLv8
   scoreText: {fileID: 1667830678}
-  scoreThresholds: 900100002c0100006400000000000000
+  scoreThresholds: 90010000c80000006400000000000000
   star1Object: {fileID: 1348773989}
   star2Object: {fileID: 1865626183}
   star3Object: {fileID: 1007169992}
@@ -108401,6 +108461,102 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8ffbc7010eef50c4d986c36cc1fe588f, type: 3}
   - {fileID: 21300000, guid: bffe3011c6e840940a59a77a2bf9544c, type: 3}
   - {fileID: 21300000, guid: f2afa14d721023e418e41e76eb7cdc4f, type: 3}
+--- !u!82 &1470188447
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470188437}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 8937414586810052301, guid: 79e3285bdfded3947801202af4c63843, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 8368c813f353a034591af1f968a1b3a6, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1470411680
 GameObject:
   m_ObjectHideFlags: 0
@@ -112915,8 +113071,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bisakah kamu membatu saya menghitng selisih anatara anak laki-laki dan
-    perempan ..
+  m_text: Bisakah kamu membatu saya memilih bilangan mana yang paling banyak ...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
   m_sharedMaterial: {fileID: 244901386658407051, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
@@ -113452,8 +113607,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -129973,7 +130128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1816549739
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136354,6 +136509,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53693da9522872f4bb57137bed75a8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 
+  sceneName: 
   spriteOff: {fileID: 21300000, guid: 09690c3d68742eb4d87b746f91a0e76a, type: 3}
   spriteOn: {fileID: 21300000, guid: 6cea42c1d32fabe4c99d5cafec3161a4, type: 3}
 --- !u!212 &1901182137
@@ -143068,6 +143225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53693da9522872f4bb57137bed75a8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: L8M4
+  sceneName: Level 8
   spriteOff: {fileID: 21300000, guid: 09690c3d68742eb4d87b746f91a0e76a, type: 3}
   spriteOn: {fileID: 21300000, guid: 6cea42c1d32fabe4c99d5cafec3161a4, type: 3}
 --- !u!61 &1999969745
@@ -151261,8 +151420,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bisakah kamu membatu bapak menghitung dan mencari jumlah selisih pada mobil
-    mobil ini ...
+  m_text: Bisakah  membatu bapak melengkapi angka angka yang hilang pada table angka
+    berikut ini..
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
   m_sharedMaterial: {fileID: 244901386658407051, guid: d93f193627ee17d4db1bc00f29cb61bd, type: 2}
@@ -151560,8 +151719,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1155056336, guid: 2e5f41b1b5c032d448033b030655f008, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

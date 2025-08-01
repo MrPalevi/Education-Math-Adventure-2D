@@ -1,27 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
-using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static Vector3 lastCheckPointPos = new Vector3(-5f, 0f, 0f);
     public static bool isGameOver;
-    public static Vector2 lastCheckPointPos = new Vector2(-5, 0);
+
     public GameObject gameOverScreen;
     public GameObject panelPause;
 
     private void Awake()
     {
         isGameOver = false;
-        GameObject.FindGameObjectWithTag("Player").transform.position = lastCheckPointPos;
     }
+
+    void Start()
+    {
+        Time.timeScale = 1f;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        Vector3 spawnPos = lastCheckPointPos;
+        if (spawnPos.x < 0) spawnPos.x = 0f;
+
+        if (spawnPos != Vector3.zero)
+        {
+            player.transform.position = spawnPos;
+        }
+        else
+        {
+            Debug.Log("Mulai dari posisi default karena belum ada checkpoint.");
+        }
+    }
+
 
     void Update()
     {
         if (isGameOver)
         {
-            gameOverScreen.SetActive(true);
+            if (gameOverScreen != null)
+                gameOverScreen.SetActive(true);
         }
     }
 
@@ -33,13 +51,22 @@ public class PlayerManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
-        panelPause.SetActive(true);
+        if (panelPause != null)
+            panelPause.SetActive(true);
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        panelPause.SetActive(false);
+        if (panelPause != null)
+            panelPause.SetActive(false);
     }
 
+    public void LoadSceneName(string sceneName)
+    {
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+    }
 }

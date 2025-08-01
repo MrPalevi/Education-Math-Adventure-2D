@@ -34,9 +34,6 @@ public class DadangController : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.DeleteAll(); // Menghapus SEMUA data yang tersimpan
-        PlayerPrefs.Save();
-        Debug.Log("Smua playerPrefs di reset");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 

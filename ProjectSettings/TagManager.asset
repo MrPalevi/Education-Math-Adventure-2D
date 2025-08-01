@@ -8,6 +8,7 @@ TagManager:
   - PuzzlePiece
   - ItemGlobal
   - BridgeTrigger
+  - Audio
   layers:
   - Default
   - TransparentFX

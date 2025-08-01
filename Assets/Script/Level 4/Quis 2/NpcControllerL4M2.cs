@@ -39,9 +39,6 @@ public class NpcControllerL4M2 : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.DeleteAll(); // Menghapus SEMUA data yang tersimpan
-        PlayerPrefs.Save();
-        Debug.Log("Smua playerPrefs di reset");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
 

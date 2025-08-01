@@ -403,6 +403,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Button_0
+      rect:
+        serializedVersion: 2
+        x: 1338
+        y: 1885
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03e3ecbbc309f8644a872b11b7dbf442
+      internalID: 1962458723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -418,6 +439,7 @@ TextureImporter:
       Arraw Kanan: 1902355507
       Arraw Kiri: 2021977453
       Button Pause: 17667389
+      Button_0: 1962458723
       Exit: -1445362634
       Jump: 1301055558
       Level: 1538698784
