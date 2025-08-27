@@ -120,29 +120,35 @@ public class NpcControllerL5M5 : MonoBehaviour
         controllerPanel?.SetActive(true);
     }
 
-    public void OnPuzzleCheckResult(bool isCorrect)
+        public void OnPuzzleCheckResult(bool isCorrect)
     {
         timeManager?.StopTimer();
         panelPuzzle?.SetActive(false);
-        Stop.SetActive(false);
-        StartCoroutine(ShowFeedbackThenComplete(isCorrect));
+        Stop?.SetActive(false);
+
+        ShowFeedback(isCorrect); // tampilkan feedback manual
     }
 
-    IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+    private void ShowFeedback(bool isCorrect)
     {
-        int score = isCorrect ? 100 : 0;
+        // Matikan semua feedback dulu
+        feedbackBenar?.SetActive(false);
+        feedbackSalah?.SetActive(false);
 
         if (isCorrect)
         {
             feedbackBenar?.SetActive(true);
+            Debug.Log("Feedback Benar ditampilkan");
         }
         else
         {
             feedbackSalah?.SetActive(true);
-            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
+            Debug.Log("Feedback Salah ditampilkan");
+            chestBox?.SetActive(false); // pastikan tidak muncul saat salah
         }
 
-        // Simpan skor jika belum pernah disimpan
+        // Simpan skor jika belum ada
+        int score = isCorrect ? 100 : 0;
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
@@ -154,19 +160,22 @@ public class NpcControllerL5M5 : MonoBehaviour
             Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
         }
 
-        yield return new WaitForSeconds(feedbackDuration);
+        isMissionCompleted = true;
+    }
+
+    public void CloseFeedback()
+    {
+        bool isCorrect = feedbackBenar.activeSelf; // cek apakah feedback benar yang aktif
 
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
 
-        // ✅ Tunda 0.5 detik baru munculkan chestBox (hanya jika benar)
         if (isCorrect)
         {
-            yield return new WaitForSeconds(0.5f);
             chestBox?.SetActive(true);
+            Debug.Log("ChestBox ditampilkan setelah feedbackBenar ditutup");
         }
 
-        isMissionCompleted = true;
         DadangChatCoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
     }

@@ -20,8 +20,12 @@ public class AngkaCollector : MonoBehaviour
 
     private bool misiSelesai = false;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
+         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+         
         if (instance == null)
             instance = this;
         else
@@ -55,6 +59,7 @@ public class AngkaCollector : MonoBehaviour
             ShowAngkaInUI(id);
             Destroy(currentAngka.gameObject);
             HideCollectButton();
+            audioManager.PlaySFX(audioManager.Take);
 
             if (collectedIDs.Count >= 10 && !misiSelesai)
             {

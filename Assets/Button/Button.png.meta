@@ -412,7 +412,7 @@ TextureImporter:
         width: 195
         height: 182
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -420,6 +420,27 @@ TextureImporter:
       bones: []
       spriteID: 03e3ecbbc309f8644a872b11b7dbf442
       internalID: 1962458723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shop
+      rect:
+        serializedVersion: 2
+        x: 1336
+        y: 795
+        width: 195
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae29ee3163bc9fd4aab8b9a6f8bcb6da
+      internalID: 982446361
       vertices: []
       indices: 
       edges: []
@@ -449,6 +470,7 @@ TextureImporter:
       Restart 1: -664917209
       Save button: -420897138
       Setting: -908189859
+      Shop: 982446361
       ui: -2030008578
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

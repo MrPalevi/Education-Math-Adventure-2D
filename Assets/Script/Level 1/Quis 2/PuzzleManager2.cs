@@ -1,8 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 
 public class PuzzleManager2 : MonoBehaviour
@@ -19,18 +17,21 @@ public class PuzzleManager2 : MonoBehaviour
     [Header("Feedback UI")]
     public GameObject feedbackMenang;
     public GameObject feedbackKalah;
-    public float feedbackDuration = 2f; // durasi tampil (detik)
     public TimeManager timeManager;
+
+    [Header("Hadiah Misi")]
+    public GameObject chestBox;
 
     [Header("Feedback RinaController")]
     public static PuzzleManager2 instance;
     public event Action<bool> OnPuzzleFinished;
 
+    private bool lastIsWin = false; // menyimpan hasil terakhir (menang/kalah)
+
     void Awake()
     {
         instance = this;
     }
-    
 
     void Start()
     {
@@ -45,22 +46,15 @@ public class PuzzleManager2 : MonoBehaviour
         if (IsPuzzleCompleted())
         {
             bool isCorrect = IsPuzzleCorrect();
+            lastIsWin = isCorrect; // simpan hasil
 
             Debug.Log(isCorrect ? "Benar" : "Salah");
-            if (isCorrect)
-            {
-                panelPuzzle.SetActive(false);
-                timeManager.StopTimer();
-                StartCoroutine(ShowFeedback(feedbackMenang));
-            }
-            else
-            {
-                panelPuzzle.SetActive(false);
-                timeManager.StopTimer();
-                StartCoroutine(ShowFeedback(feedbackKalah));
-            }
 
-            // Lanjut ke soal berikutnya jika ada
+            panelPuzzle.SetActive(false);
+            timeManager.StopTimer();
+
+            ShowFeedbackManual(isCorrect);
+
             currentQuestionIndex++;
             if (currentQuestionIndex < puzzleQuestions.Length)
             {
@@ -73,7 +67,6 @@ public class PuzzleManager2 : MonoBehaviour
     bool IsPuzzleCompleted()
     {
         PuzzleQuestion currentQuestion = puzzleQuestions[currentQuestionIndex];
-
         foreach (var dropZone in currentQuestion.dropZones)
         {
             if (dropZone.transform.childCount == 0)
@@ -115,15 +108,31 @@ public class PuzzleManager2 : MonoBehaviour
         return true;
     }
 
-    IEnumerator ShowFeedback(GameObject feedbackObject)
+    // Tampilkan feedback tanpa auto close
+    private void ShowFeedbackManual(bool isWin)
     {
-        feedbackObject.SetActive(true);
-        yield return new WaitForSeconds(feedbackDuration);
-        feedbackObject.SetActive(false);
+        feedbackMenang.SetActive(isWin);
+        feedbackKalah.SetActive(!isWin);
 
-        // Panggil event setelah feedback ditampilkan
-        bool isWin = (feedbackObject == feedbackMenang);
-        OnPuzzleFinished?.Invoke(isWin);
+        // Pastikan chestBox selalu nonaktif dulu
+        if (chestBox != null)
+            chestBox.SetActive(false);
+    }
+
+    // Fungsi untuk tombol menutup feedback
+    public void CloseFeedback()
+    {
+        feedbackMenang.SetActive(false);
+        feedbackKalah.SetActive(false);
+
+        // Jika jawaban benar, tampilkan chestBox
+        if (lastIsWin && chestBox != null)
+        {
+            chestBox.SetActive(true);
+        }
+
+        // Panggil event setelah feedback ditutup
+        OnPuzzleFinished?.Invoke(lastIsWin);
     }
 
     void ShowCurrentQuestion()
@@ -133,7 +142,6 @@ public class PuzzleManager2 : MonoBehaviour
             PuzzleQuestion currentQuestion = puzzleQuestions[currentQuestionIndex];
             questionTextUI.text = currentQuestion.questionText;
 
-            // Atur potongan puzzle
             for (int i = 0; i < puzzlePieceObjects.Length; i++)
             {
                 Image puzzlePieceImage = puzzlePieceObjects[i].GetComponent<Image>();
@@ -150,7 +158,6 @@ public class PuzzleManager2 : MonoBehaviour
                 }
             }
 
-            // Aktifkan DropZones yang dibutuhkan
             for (int i = 0; i < dropZones.Length; i++)
             {
                 if (i < currentQuestion.dropZones.Length)
@@ -170,7 +177,6 @@ public class PuzzleManager2 : MonoBehaviour
         for (int i = 0; i < puzzlePieceObjects.Length; i++)
         {
             int randomIndex = UnityEngine.Random.Range(0, puzzlePieceObjects.Length);
-
             Transform temp = puzzlePieceObjects[i].transform;
 
             puzzlePieceObjects[i].transform.SetSiblingIndex(puzzlePieceObjects[randomIndex].transform.GetSiblingIndex());
@@ -187,9 +193,9 @@ public class PuzzleManager2 : MonoBehaviour
     }
 }
 
-    [System.Serializable]
-    public class PuzzlePieceData
-    {
-        public Sprite sprite;
-        public int pieceID;
-    }
+[System.Serializable]
+public class PuzzlePieceData
+{
+    public Sprite sprite;
+    public int pieceID;
+}

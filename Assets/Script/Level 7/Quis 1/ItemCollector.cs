@@ -5,9 +5,9 @@ using TMPro;
 [System.Serializable]
 public class ItemTarget
 {
-    public string itemName;       // Nama item (contoh: "Kotak", "Segitiga")
-    public int requiredAmount;    // Target jumlah item yang harus dikumpulkan
-    public int collectedAmount;   // Jumlah item yang sudah dikumpulkan
+    public string itemName;       
+    public int requiredAmount;    
+    public int collectedAmount; 
 }
 
 public class ItemCollector : MonoBehaviour
@@ -18,8 +18,8 @@ public class ItemCollector : MonoBehaviour
     public ItemTarget[] itemTargets;    // Semua item yang harus dikumpulkan
 
     [Header("UI")]
-    public TMP_Text[] countTexts;       // Teks jumlah item per jenis (urutan sesuai itemTargets)
-    public Color normalTextColor = Color.white; // Warna default (sebelum lengkap)
+    public TMP_Text[] countTexts;       
+    public Color normalTextColor = Color.white; // Warna default
     public Color completedTextColor = Color.green; // Warna saat item sudah lengkap
 
     [Header("UI Tombol & NPC")]
@@ -30,9 +30,11 @@ public class ItemCollector : MonoBehaviour
     private string currentItemType;
     private bool canCollect = false;
     private bool missionStarted = false;
+    AudioManager audioManager;
 
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         instance = this;
     }
 
@@ -84,6 +86,7 @@ public class ItemCollector : MonoBehaviour
                 // ✅ Pengecekan EXACT MATCH, case-sensitive
                 if (string.Equals(itemTargets[i].itemName, currentItemType, System.StringComparison.Ordinal))
                 {
+                    audioManager.PlaySFX(audioManager.Take);
                     itemTargets[i].collectedAmount++;
                     foundMatch = true;
                     break; // ✅ Hentikan perulangan setelah ketemu

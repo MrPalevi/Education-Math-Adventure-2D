@@ -33,6 +33,9 @@ public class MainMenuManager : MonoBehaviour
     public GameObject panelWelcome;
     public GameObject panelArchive;
     public GameObject panelSelamat;
+    public GameObject panelKeluar;
+    public GameObject panelResetConfirmasi;
+    public GameObject panelResetSukses;
 
     [Header("Panel UI")]
     public GameObject panelProgres;
@@ -46,8 +49,13 @@ public class MainMenuManager : MonoBehaviour
     public LevelUnlockData[] levelUnlockList;
 
     private const string playerPrefsKey = "NamaUser";
-    AudioManager audioManager;
     private bool panelSelamatSiap = false;
+
+    [Header("Resume Settings")]
+    public string[] playerPrefsScoreFinalKey; 
+    public string[] sceneNameList;              
+
+    AudioManager audioManager;
 
     private void Awake()
     {
@@ -236,7 +244,7 @@ public class MainMenuManager : MonoBehaviour
     private void ShowOnly(GameObject panelToShow)
     {
         judulGame?.SetActive(false);
-        BGprofile?.SetActive(false);
+        // BGprofile?.SetActive(false);
         panelButton?.SetActive(false);
         panelLevel?.SetActive(false);
         panelSetting?.SetActive(false);
@@ -320,19 +328,150 @@ public class MainMenuManager : MonoBehaviour
         if (PlayerPrefs.HasKey("LastScenePlayed"))
         {
             string sceneToLoad = PlayerPrefs.GetString("LastScenePlayed");
-            SceneManager.LoadScene(sceneToLoad);
-            audioManager.PlaySFX(audioManager.button);
+
+            if (!string.IsNullOrEmpty(sceneToLoad))
+            {
+                // Langsung resume ke scene terakhir
+                SceneManager.LoadScene(sceneToLoad);
+                return;
+            }
         }
-        else
+
+        // Jika LastScenePlayed kosong atau tidak valid → cari scene terakhir yang sudah memiliki skor >= 100
+        for (int i = playerPrefsScoreFinalKey.Length - 1; i >= 0; i--)
         {
-            Debug.Log("Belum ada data scene disimpan, mulai dari Level 1.");
-            SceneManager.LoadScene("Level 1");
-            audioManager.PlaySFX(audioManager.button);
+            int score = PlayerPrefs.GetInt(playerPrefsScoreFinalKey[i], 0);
+
+            if (score >= 100)
+            {
+                // Jika sudah lulus level ini, maka lanjut ke level berikutnya
+                int nextIndex = i + 1;
+
+                if (nextIndex < sceneNameList.Length)
+                {
+                    PlayerPrefs.SetFloat("PlayerPosX", -5.5f);
+                    PlayerPrefs.SetFloat("PlayerPosY", -0.6f);
+                    PlayerPrefs.SetFloat("PlayerPosZ", 0f);
+                    PlayerPrefs.SetString("LastScenePlayed", sceneNameList[nextIndex]);
+                    PlayerPrefs.Save();
+                    SceneManager.LoadScene(sceneNameList[nextIndex]);
+                    return;
+                }
+                else
+                {
+                    // Semua level sudah selesai, bisa load ulang level terakhir jika mau
+                    SceneManager.LoadScene(sceneNameList[i]); // ulang level terakhir
+                    return;
+                }
+            }
         }
+
+        // Jika semua skor 0 atau belum main → mulai dari awal
+        SceneManager.LoadScene("Level 1");
     }
+
 
     public void TutupPanelSelamat()
     {
         panelSelamat.SetActive(false);
+        audioManager.PlaySFX(audioManager.button);
     }
+
+    public void PanelReset()
+    {
+        if(panelResetConfirmasi != null)
+        panelResetConfirmasi.SetActive(!panelResetConfirmasi.activeSelf);
+        audioManager.PlaySFX(audioManager.button);
+    }
+
+    public void PanelKeluar()
+    {
+        if(panelKeluar != null)
+        panelKeluar.SetActive(!panelKeluar.activeSelf);
+        audioManager.PlaySFX(audioManager.button);
+    }
+
+
+    public void PanelKonfirmasiReset()
+    {
+        ResetDataPermainan();
+
+        if(panelResetConfirmasi != null)
+        panelResetConfirmasi.SetActive(false);
+
+        if(panelResetSukses != null)
+        panelResetSukses.SetActive(true);
+        audioManager.PlaySFX(audioManager.button);
+
+    }
+
+    public void ResetDataPermainan()
+    {
+        // Hapus semua PlayerPrefs
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        // Reset warna semua imageArchiveProfile ke semula
+        foreach (var data in levelUnlockList)
+        {
+            if (data.imageArchiveProfile != null)
+            {
+                for (int i = 0; i < data.imageArchiveProfile.Length; i++)
+                {
+                    if (data.imageArchiveProfile[i] != null)
+                    {
+                        Image img = data.imageArchiveProfile[i];
+                        img.color = new Color(1f, 1f, 1f, 0f); // alpha 0 (transparan)
+                    }
+                }
+            }
+
+            // Nonaktifkan angka archive
+            if (data.imageArchiveAngka != null)
+            {
+                foreach (var angka in data.imageArchiveAngka)
+                {
+                    if (angka != null)
+                        angka.SetActive(false);
+                }
+            }
+        }
+
+        // Nonaktifkan panel-panel
+        if (panelArchive != null) panelArchive.SetActive(false);
+        if (panelSelamat != null) panelSelamat.SetActive(false);
+
+        // (Opsional) Tampilkan log
+        Debug.Log("Semua data permainan telah direset.");
+    }
+
+    public void KeluarGame()
+    {
+        Application.Quit();
+    }
+
+    // public void ResumePermainan()
+    // {
+    //     if (PemainLanjutan())
+    //     {
+    //         string sceneToLoad = PlayerPrefs.GetString("LastScenePlayed");
+    //         SceneManager.LoadScene(sceneToLoad);
+    //         audioManager.PlaySFX(audioManager.button);
+    //     }
+    //     else
+    //     {
+    //         SceneManager.LoadScene("Level1"); // default scene awal
+    //         audioManager.PlaySFX(audioManager.button);
+    //     }
+    // }
+
+    // private bool PemainLanjutan()
+    // {
+    //     return PlayerPrefs.HasKey("LastScenePlayed") &&
+    //         PlayerPrefs.HasKey("PlayerPosX") &&
+    //         PlayerPrefs.HasKey("PlayerPosY") &&
+    //         PlayerPrefs.HasKey("PlayerPosZ");
+    // }
+
+
 }

@@ -6,10 +6,11 @@ public class RinaController : MonoBehaviour
 {
     private Transform player;
     private SpriteRenderer spriteRenderer;
-    public float detectionRange = 5f;
+    public float detectionRange = 4f;
 
     public GameObject chatBoxUI;
     public GameObject controllerPanel;
+    public GameObject UjangChatBox;
 
     private bool isChatShown = false;
     private bool isPlayerInRange = false;
@@ -26,7 +27,7 @@ public class RinaController : MonoBehaviour
     public GameObject chestBox;
 
     [Header("Pengaturan Skor")]
-    public string namaPlayerPrefsScore = "L1M2"; // ✅ Bisa diatur di Inspector
+    public string namaPlayerPrefsScore = "L1M2";
 
     private bool isTimeOut = false;
 
@@ -70,7 +71,16 @@ public class RinaController : MonoBehaviour
         }
 
         bridge?.SetActive(true);
-        chestBox?.SetActive(true);
+
+        // ✅ chestBox hanya muncul jika jawaban benar
+        if (isWin)
+        {
+            chestBox?.SetActive(true);
+        }
+        else
+        {
+            chestBox?.SetActive(false);
+        }
     }
 
     void Update()
@@ -97,7 +107,7 @@ public class RinaController : MonoBehaviour
 
         isPlayerInRange = true;
 
-        if (!isChatShown && !isTimeOut)
+        if (!isChatShown && !isMissionCompleted && !isTimeOut)
         {
             ShowChat();
         }
@@ -109,10 +119,10 @@ public class RinaController : MonoBehaviour
 
         isPlayerInRange = false;
         isChatShown = false;
-        chatBoxUI?.SetActive(false);
-
-        rinaChatBoxPanelComplete?.SetActive(false);
         isPanelCompleteShowing = false;
+
+        chatBoxUI?.SetActive(false);
+        rinaChatBoxPanelComplete?.SetActive(false);
     }
 
     public void FeedbackBenar()
@@ -129,8 +139,8 @@ public class RinaController : MonoBehaviour
         }
 
         isMissionCompleted = true;
-        chatBoxUI.SetActive(false);
-        controllerPanel.SetActive(true);
+        chatBoxUI?.SetActive(false);
+        controllerPanel?.SetActive(true);
     }
 
     public void FeedbackSalah()
@@ -143,8 +153,8 @@ public class RinaController : MonoBehaviour
         }
 
         isMissionCompleted = false;
-        chatBoxUI.SetActive(false);
-        controllerPanel.SetActive(true);
+        chatBoxUI?.SetActive(false);
+        controllerPanel?.SetActive(true);
     }
 
     void ShowChat()
@@ -153,17 +163,8 @@ public class RinaController : MonoBehaviour
 
         isChatShown = true;
 
-        if (isMissionCompleted && rinaChatBoxPanelComplete != null)
-        {
-            rinaChatBoxPanelComplete.SetActive(true);
-            chatBoxUI?.SetActive(false);
-            StartCoroutine(HideRinaCompletePanelAfterDelay());
-        }
-        else
-        {
-            chatBoxUI?.SetActive(true);
-        }
-
+        // Tidak perlu menampilkan panelComplete di sini lagi
+        chatBoxUI?.SetActive(true);
         controllerPanel?.SetActive(false);
     }
 
@@ -181,6 +182,7 @@ public class RinaController : MonoBehaviour
 
     public void MulaiMisiPuzzle()
     {
+        UjangChatBox?.SetActive(false);
         chatBoxUI?.SetActive(false);
         panelPuzzle?.SetActive(true);
         controllerPanel?.SetActive(false);
@@ -195,11 +197,16 @@ public class RinaController : MonoBehaviour
         controllerPanel?.SetActive(true);
     }
 
+    public void ShowChatUjang()
+    {
+        UjangChatBox?.SetActive(true);
+        chatBoxUI?.SetActive(false);
+    }
+
     IEnumerator HideRinaCompletePanelAfterDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         rinaChatBoxPanelComplete?.SetActive(false);
-        isPanelCompleteShowing = false;
     }
 
     void HandleTimeOut()

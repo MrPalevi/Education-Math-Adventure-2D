@@ -30,10 +30,17 @@ public class AnnisaController : MonoBehaviour
     public GameObject Teleport;
     public GameObject Stop;
     public GameObject chestBox;
+    public GameObject UjangChatBox;
 
     [Header("Dialog")]
     [TextArea(2, 5)] public string[] dialogKalimatAwal;
     [TextArea(2, 5)] public string[] dialogSetelahBenar;
+
+    [Header("Audio Dialog")]
+    public AudioSource audioSource;
+    public AudioClip[] dialogKalimatAwalAudio;
+    public AudioClip[] dialogSetelahBenarAudio;
+
 
     private int indexDialog = 0;
     private int indexDialogComplete = 0;
@@ -136,6 +143,7 @@ public class AnnisaController : MonoBehaviour
         chatBoxUI.SetActive(true);
         chatText.text = dialogKalimatAwal[indexDialog];
         ControllerPanel.SetActive(false);
+        PlayDialogAudio(dialogKalimatAwalAudio, indexDialog);
 
         terimaButton.gameObject.SetActive(true);
         tolakButton.gameObject.SetActive(true);
@@ -147,7 +155,9 @@ public class AnnisaController : MonoBehaviour
     {
         isMissionStarted = true;
         indexDialog++;
-        TampilkanDialog();
+        UjangChatBox.SetActive(true);
+        // TampilkanDialog();
+        chatBoxUI.SetActive(false);
 
         terimaButton.gameObject.SetActive(false);
         tolakButton.gameObject.SetActive(false);
@@ -164,6 +174,13 @@ public class AnnisaController : MonoBehaviour
         Teleport.SetActive(false);
     }
 
+    public void LanjutDialogUjang()
+    {
+        UjangChatBox.SetActive(false);
+        TampilkanDialog();
+        chatBoxUI.SetActive(true);
+    }
+    
     void LanjutDialog()
     {
         indexDialog++;
@@ -175,6 +192,9 @@ public class AnnisaController : MonoBehaviour
         if (indexDialog < dialogKalimatAwal.Length)
         {
             chatText.text = dialogKalimatAwal[indexDialog];
+
+            // Mainkan audio sesuai indeks
+            PlayDialogAudio(dialogKalimatAwalAudio, indexDialog);
         }
 
         if (indexDialog == dialogKalimatAwal.Length - 1)
@@ -183,6 +203,7 @@ public class AnnisaController : MonoBehaviour
             tutupButton.gameObject.SetActive(true);
         }
     }
+
 
     void TutupChatBox()
     {
@@ -210,7 +231,6 @@ public class AnnisaController : MonoBehaviour
         uiTaskPanel.SetActive(false);
         timeManager?.StopTimer();
 
-        // ✅ Simpan skor hanya jika belum pernah disimpan
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, 100);
@@ -226,6 +246,7 @@ public class AnnisaController : MonoBehaviour
         if (dialogSetelahBenar.Length > 0)
         {
             chatTextComplete.text = dialogSetelahBenar[indexDialogComplete];
+            PlayDialogAudio(dialogSetelahBenarAudio, indexDialogComplete);
         }
         else
         {
@@ -236,7 +257,6 @@ public class AnnisaController : MonoBehaviour
         closeCompleteButton.gameObject.SetActive(dialogSetelahBenar.Length <= 1);
     }
 
-
     void LanjutDialogComplete()
     {
         indexDialogComplete++;
@@ -244,6 +264,7 @@ public class AnnisaController : MonoBehaviour
         if (indexDialogComplete < dialogSetelahBenar.Length)
         {
             chatTextComplete.text = dialogSetelahBenar[indexDialogComplete];
+            PlayDialogAudio(dialogSetelahBenarAudio, indexDialogComplete);
         }
 
         if (indexDialogComplete == dialogSetelahBenar.Length - 1)
@@ -254,6 +275,7 @@ public class AnnisaController : MonoBehaviour
             Teleport.SetActive(false);
         }
     }
+
 
     void TutupChatBoxComplete()
     {
@@ -293,4 +315,15 @@ public class AnnisaController : MonoBehaviour
 
         // pencilCollector.ResetCollector(); // Opsional jika ingin reset ulang
     }
+
+    void PlayDialogAudio(AudioClip[] clips, int index)
+    {
+        if (audioSource == null || clips == null || index >= clips.Length || clips[index] == null)
+            return;
+
+        audioSource.Stop();
+        audioSource.clip = clips[index];
+        audioSource.Play();
+    }
+
 }

@@ -107,63 +107,62 @@ public class AnnisaControllerL2M1 : MonoBehaviour
     {
         timeManager?.StopTimer();
         panelPuzzle?.SetActive(false);
-        Stop.SetActive(false);
-        StartCoroutine(ShowFeedbackThenComplete(isCorrect));
+        Stop?.SetActive(false);
+
+        ShowFeedback(isCorrect); // tampilkan feedback manual
     }
 
-IEnumerator ShowFeedbackThenComplete(bool isCorrect)
-{
-    int score = isCorrect ? 100 : 0;
-
-    // Pastikan semua feedback dimatikan dulu
-    feedbackBenar?.SetActive(false);
-    feedbackSalah?.SetActive(false);
-
-    yield return null; // Tunggu 1 frame agar reset efektif
-
-    // Tampilkan feedback sesuai hasil
-    if (isCorrect)
+    private void ShowFeedback(bool isCorrect)
     {
-        feedbackBenar?.SetActive(true);
-        Debug.Log("Feedback Benar ditampilkan");
+        // Pastikan semua feedback dimatikan dulu
+        feedbackBenar?.SetActive(false);
+        feedbackSalah?.SetActive(false);
+
+        if (isCorrect)
+        {
+            feedbackBenar?.SetActive(true);
+            Debug.Log("Feedback Benar ditampilkan");
+        }
+        else
+        {
+            feedbackSalah?.SetActive(true);
+            Debug.Log("Feedback Salah ditampilkan");
+            chestBox?.SetActive(false); // Pastikan chest tidak muncul jika salah
+        }
+
+        // Simpan skor jika belum disimpan
+        int score = isCorrect ? 100 : 0;
+        if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+        {
+            PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
+            PlayerPrefs.Save();
+            Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
+        }
+        else
+        {
+            Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
+        }
+
+        // Set status misi
+        isMissionCompleted = true;
     }
-    else
+
+    public void CloseFeedback()
     {
-        feedbackSalah?.SetActive(true);
-        Debug.Log("Feedback Salah ditampilkan");
-        chestBox?.SetActive(false); // Pastikan chest tidak tampil saat salah
+        bool isCorrect = feedbackBenar.activeSelf; // cek apakah yang aktif feedback benar
+
+        feedbackBenar?.SetActive(false);
+        feedbackSalah?.SetActive(false);
+
+        if (isCorrect)
+        {
+            chestBox?.SetActive(true);
+            Debug.Log("ChestBox ditampilkan setelah feedbackBenar ditutup");
+        }
+
+        AnnisaChatCoxPanelComplet?.SetActive(true);
+        controllerPanel?.SetActive(true);
     }
-
-    // Simpan skor jika belum disimpan
-    if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
-    {
-        PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
-        PlayerPrefs.Save();
-        Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
-    }
-    else
-    {
-        Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
-    }
-
-    // Tunggu durasi feedback tampil
-    yield return new WaitForSeconds(feedbackDuration);
-
-    feedbackBenar?.SetActive(false);
-    feedbackSalah?.SetActive(false);
-
-    // ✅ Delay 0.5 detik lalu munculkan chestBox jika benar
-    if (isCorrect)
-    {
-        yield return new WaitForSeconds(0.5f);
-        chestBox?.SetActive(true);
-        Debug.Log("ChestBox ditampilkan setelah delay");
-    }
-
-    isMissionCompleted = true;
-    AnnisaChatCoxPanelComplet?.SetActive(true);
-    controllerPanel?.SetActive(true);
-}
 
 
     void ShowChat()

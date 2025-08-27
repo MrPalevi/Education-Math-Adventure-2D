@@ -18,9 +18,12 @@ public class PencilCollector : MonoBehaviour
     private bool canCollect = false;
     private bool missionStarted = false;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         instance = this;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     public void StartCollecting()
@@ -57,6 +60,7 @@ public class PencilCollector : MonoBehaviour
         if (currentPencil != null)
         {
             Destroy(currentPencil);
+            audioManager.PlaySFX(audioManager.Take);
             currentCollected++;
             UpdateUI();
             HideCollectButton();

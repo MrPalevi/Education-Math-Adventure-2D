@@ -12,23 +12,19 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource SFXSource;
 
     [Header("----------Audio Source Gameplay----------")]
-    public AudioClip button;
-
-    [Header("----------Audio Source Gameplay----------")]
-    public AudioClip backgroundMainMenu;
-    public AudioClip backgroundPlayGame;
     public AudioClip Jump;
     public AudioClip Run;
     public AudioClip Take;
+    public AudioClip Cekpoint;
+    public AudioClip Hit;
+    public AudioClip TakeCoin;
 
-    [Header("----------Audio Source Gameplay----------")]
+    [Header("----------Audio Source Main Menu----------")]
+    public AudioClip backgroundMainMenu;
     public AudioClip Welcome;
-    public AudioClip MenuDiaolog1;
-    public AudioClip MenuDiaolog2;
-    public AudioClip MenuDiaolog3;
-    public AudioClip MenuDiaolog4;
-    public AudioClip MenuDiaolog5;
-    public AudioClip MenuDiaolog6;
+    public AudioClip button;
+
+
 
     private void Awake()
     {

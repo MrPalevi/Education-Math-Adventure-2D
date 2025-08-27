@@ -12,6 +12,7 @@ public class PaAsepController : MonoBehaviour
     public GameObject chatBoxUI;
     public TextMeshProUGUI chatText;
     public Button terimaButton;
+    public Button lanjutButtonUjang;
     public Button tolakButton;
     public Button lanjutButton;
     public Button tutupButton;
@@ -30,6 +31,7 @@ public class PaAsepController : MonoBehaviour
     public GameObject chestBox;
     public GameObject ReturnToPaAsep;
     public GameObject TimeOverPanel;
+    public GameObject UjangChatBox;
 
     [Header("Timer")]
     public TimeManager timeManager;
@@ -42,6 +44,13 @@ public class PaAsepController : MonoBehaviour
 
     [Header("Pengaturan Skor")]
     public string namaPlayerPrefsScore = "L1M1";
+
+    [Header("Audio Dialog")]
+    public AudioSource audioSource;
+    public AudioClip[] dialogKalimatAwalAudio;
+    public AudioClip[] dialogSetelahBenarAudio;
+    public AudioClip[] dialogSetelahSalahAudio;
+
 
     private int indexDialog = 0;
     private int indexDialogComplete = 0;
@@ -82,6 +91,7 @@ public class PaAsepController : MonoBehaviour
         NextLevel.SetActive(false);
 
         lanjutButton.onClick.AddListener(LanjutDialog);
+        lanjutButtonUjang.onClick.AddListener(LanjutDialog);
         terimaButton.onClick.AddListener(TerimaMisi);
         tolakButton.onClick.AddListener(TolakMisi);
         tutupButton.onClick.AddListener(TutupChatBox);
@@ -99,7 +109,7 @@ public class PaAsepController : MonoBehaviour
 
         if (isPlayerInRange && !isMissionStarted && !chatBoxUI.activeSelf && !isRejected)
         {
-            TampilkanChatAwal();
+            // TampilkanChatAwal();
         }
     }
 
@@ -145,17 +155,20 @@ public class PaAsepController : MonoBehaviour
         tolakButton.gameObject.SetActive(true);
         lanjutButton.gameObject.SetActive(false);
         tutupButton.gameObject.SetActive(false);
+        PlayDialogAudio(dialogKalimatAwalAudio, indexDialog);
     }
 
     void TerimaMisi()
     {
-        isMissionStarted = true;
-        indexDialog++;
-        TampilkanDialog();
+        UjangChatBox.SetActive(true);
+        chatBoxUI.SetActive(false);
+        // isMissionStarted = true;
+        // indexDialog++;
+        // TampilkanDialog();
         terimaButton.gameObject.SetActive(false);
         tolakButton.gameObject.SetActive(false);
         lanjutButton.gameObject.SetActive(true);
-        Portal.gameObject.SetActive(true);
+        // Portal.gameObject.SetActive(true);
     }
 
     void TolakMisi()
@@ -168,6 +181,13 @@ public class PaAsepController : MonoBehaviour
 
     void LanjutDialog()
     {
+        UjangChatBox.SetActive(false);
+        chatBoxUI.SetActive(true);
+        isMissionStarted = true;
+        terimaButton.gameObject.SetActive(false);
+        tolakButton.gameObject.SetActive(false);
+        lanjutButtonUjang.gameObject.SetActive(true);
+        Portal.gameObject.SetActive(true);
         indexDialog++;
         TampilkanDialog();
     }
@@ -177,6 +197,7 @@ public class PaAsepController : MonoBehaviour
         if (indexDialog < dialogKalimatAwal.Length)
         {
             chatText.text = dialogKalimatAwal[indexDialog];
+            PlayDialogAudio(dialogKalimatAwalAudio, indexDialog);
         }
 
         if (indexDialog == dialogKalimatAwal.Length - 1)
@@ -215,20 +236,22 @@ public class PaAsepController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
+        // Tampilkan feedback sesuai jawaban
         if (isJawabanBenar)
+        {
             AngkaCollector.instance.feedbackBenarUI.SetActive(true);
+            AngkaCollector.instance.feedbackSalahUI.SetActive(false);
+        }
         else
+        {
             AngkaCollector.instance.feedbackSalahUI.SetActive(true);
+            AngkaCollector.instance.feedbackBenarUI.SetActive(false);
+        }
 
         if (timeManager != null)
         {
             timeManager.StopTimer();
         }
-
-        yield return new WaitForSeconds(2f);
-
-        AngkaCollector.instance.feedbackBenarUI.SetActive(false);
-        AngkaCollector.instance.feedbackSalahUI.SetActive(false);
 
         // Simpan skor hanya jika belum pernah disimpan
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
@@ -243,8 +266,9 @@ public class PaAsepController : MonoBehaviour
             Debug.Log("Skor untuk " + namaPlayerPrefsScore + " sudah ada, tidak ditimpa.");
         }
 
-        TampilkanDialogComplete();
+        // ✅ Hentikan otomatis lanjut, tunggu player klik tombol di feedback UI
     }
+
 
     void TampilkanDialogComplete()
     {
@@ -254,17 +278,37 @@ public class PaAsepController : MonoBehaviour
 
         var dialog = isJawabanBenar ? dialogSetelahBenar : dialogSetelahSalah;
         chatTextComplete.text = dialog[indexDialogComplete];
+
+        // Play first audio of dialog complete
+        if (isJawabanBenar)
+            PlayDialogAudio(dialogSetelahBenarAudio, indexDialogComplete);
+        else
+            PlayDialogAudio(dialogSetelahSalahAudio, indexDialogComplete);
+
         nextCompleteButton.gameObject.SetActive(true);
         closeCompleteButton.gameObject.SetActive(false);
+    }
+
+    void PlayDialogAudio(AudioClip[] clips, int index)
+    {
+        if (audioSource == null || clips == null || index >= clips.Length || clips[index] == null)
+            return;
+
+        audioSource.Stop();
+        audioSource.clip = clips[index];
+        audioSource.Play();
     }
 
     void LanjutDialogComplete()
     {
         var dialog = isJawabanBenar ? dialogSetelahBenar : dialogSetelahSalah;
+        var clips = isJawabanBenar ? dialogSetelahBenarAudio : dialogSetelahSalahAudio;
+
         indexDialogComplete++;
         if (indexDialogComplete < dialog.Length)
         {
             chatTextComplete.text = dialog[indexDialogComplete];
+            PlayDialogAudio(clips, indexDialogComplete);
         }
 
         if (indexDialogComplete == dialog.Length - 1)
@@ -301,4 +345,27 @@ public class PaAsepController : MonoBehaviour
         controllerPanel?.SetActive(true);
         Debug.Log("Waktu habis, misi di-reset.");
     }
+
+    public void TutupFeedbackUI()
+    {
+        // Matikan semua feedback
+        AngkaCollector.instance.feedbackBenarUI.SetActive(false);
+        AngkaCollector.instance.feedbackSalahUI.SetActive(false);
+
+        // Jika benar, aktifkan chestBox
+        if (isJawabanBenar)
+        {
+            chestBox.SetActive(true);
+            NextLevel.SetActive(true);
+        }
+        else
+        {
+            chestBox.SetActive(false);
+            NextLevel.SetActive(false);
+        }
+
+        // Lanjut ke dialog complete
+        TampilkanDialogComplete();
+    }
+
 }

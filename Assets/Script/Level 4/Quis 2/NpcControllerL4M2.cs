@@ -111,25 +111,31 @@ public class NpcControllerL4M2 : MonoBehaviour
     {
         timeManager?.StopTimer();
         panelSoal?.SetActive(false);
-        Stop.SetActive(false);
-        StartCoroutine(ShowFeedbackThenComplete(isCorrect));
+        Stop?.SetActive(false);
+
+        ShowFeedback(isCorrect); // tampilkan feedback manual
     }
 
-    IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+    private void ShowFeedback(bool isCorrect)
     {
-        int score = isCorrect ? 100 : 0;
+        // Matikan semua feedback dulu
+        feedbackBenar?.SetActive(false);
+        feedbackSalah?.SetActive(false);
 
         if (isCorrect)
         {
             feedbackBenar?.SetActive(true);
+            Debug.Log("Feedback Benar ditampilkan");
         }
         else
         {
             feedbackSalah?.SetActive(true);
-            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
+            Debug.Log("Feedback Salah ditampilkan");
+            chestBox?.SetActive(false); // pastikan tidak muncul saat salah
         }
 
-        // Simpan skor jika belum pernah disimpan
+        // Simpan skor jika belum ada
+        int score = isCorrect ? 100 : 0;
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
@@ -141,34 +147,24 @@ public class NpcControllerL4M2 : MonoBehaviour
             Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
         }
 
-        yield return new WaitForSeconds(feedbackDuration);
+        isMissionCompleted = true;
+    }
+
+    public void CloseFeedback()
+    {
+        bool isCorrect = feedbackBenar.activeSelf; // cek apakah feedback benar yang aktif
 
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
 
         if (isCorrect)
         {
-            yield return new WaitForSeconds(0.5f);
-
-            // ⬇️ Tentukan posisi baru berdasarkan arah NPC
-            Vector3 chestPos = transform.position;
-
-            if (spriteRenderer.flipX)
-            {
-                chestPos += new Vector3(-offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kanan → chest di kiri
-            }
-            else
-            {
-                chestPos += new Vector3(offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kiri → chest di kanan
-            }
-
-            chestBox.transform.position = chestPos;
             chestBox?.SetActive(true);
+            Debug.Log("ChestBox ditampilkan setelah feedbackBenar ditutup");
         }
-        isMissionCompleted = true;
+
         DadangChatBoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
-        // bridge?.SetActive(true);
     }
 
     void ShowChat()

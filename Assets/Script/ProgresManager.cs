@@ -35,22 +35,22 @@ public class ProgresManager : MonoBehaviour
             if (data.textPersen != null && data.checkpointIDs != null && data.checkpointIDs.Length > 0)
             {
                 if (data.sceneName == currentScene)
-                {
-                    int index = GetCheckpointIndex(data.checkpointIDs, lastCheckpointID);
-                    if (index >= 0)
                     {
-                        float progress = ((index + 1f) / (data.checkpointIDs.Length + 1f)) * 100f;
-                        data.textPersen.text = $"{progress:0}%";
+                        int index = GetCheckpointIndex(data.checkpointIDs, lastCheckpointID);
+                        if (index >= 0)
+                        {
+                            float progress = ((index + 1f) / data.checkpointIDs.Length) * 100f;
+                            data.textPersen.text = $"{progress:0}%";
+                        }
+                        else
+                        {
+                            data.textPersen.text = "0%";
+                        }
                     }
                     else
                     {
                         data.textPersen.text = "0%";
                     }
-                }
-                else
-                {
-                    data.textPersen.text = "0%";
-                }
             }
 
             // Update Score dari Array Key

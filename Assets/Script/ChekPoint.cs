@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckPoint : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class CheckPoint : MonoBehaviour
     private bool activated = false;
 
     private const string prefsKey = "PlayerPrefsCheckPoint";
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     private void Start()
     {
@@ -30,6 +37,7 @@ public class CheckPoint : MonoBehaviour
 
             if (spriteRenderer != null && spriteOn != null)
                 spriteRenderer.sprite = spriteOn;
+                
         }
     }
 
@@ -54,6 +62,35 @@ public class CheckPoint : MonoBehaviour
 
             if (spriteRenderer != null && spriteOn != null)
                 spriteRenderer.sprite = spriteOn;
+                audioManager.PlaySFX(audioManager.Cekpoint);
+        }
+    }
+
+    public static void ResetCheckpointInCurrentScene()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        // Cari semua checkpoint di scene ini
+        CheckPoint[] allCheckpoints = FindObjectsOfType<CheckPoint>();
+
+        foreach (CheckPoint cp in allCheckpoints)
+        {
+            if (cp.sceneName == currentScene)
+            {
+                // Jika checkpoint ini yang sedang disimpan, hapus PlayerPrefs-nya
+                if (PlayerPrefs.GetString(prefsKey, "") == cp.checkpointID)
+                {
+                    PlayerPrefs.DeleteKey(prefsKey);
+                    PlayerPrefs.DeleteKey("LastScenePlayed");
+                    PlayerPrefs.Save();
+                    Debug.Log($"Checkpoint {cp.checkpointID} di scene {currentScene} direset.");
+                }
+
+                // Reset sprite dan statusnya
+                cp.activated = false;
+                if (cp.spriteRenderer != null && cp.spriteOff != null)
+                    cp.spriteRenderer.sprite = cp.spriteOff;
+            }
         }
     }
 }

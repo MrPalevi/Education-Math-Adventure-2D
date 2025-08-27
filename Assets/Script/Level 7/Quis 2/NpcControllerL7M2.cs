@@ -32,7 +32,12 @@ public class NpcControllerL7M2 : MonoBehaviour
 
     [Header("Dialog")]
     [TextArea(2, 5)] public string[] dialogKalimatAwal;
+    public AudioClip[] audioKalimatAwal; // 🎤 Audio untuk dialog awal
     [TextArea(2, 5)] public string[] dialogSetelahBenar;
+    public AudioClip[] audioSetelahBenar; // 🎤 Audio untuk dialog setelah benar
+
+    [Header("Audio")]
+    public AudioSource voiceSource; // 🎤 AudioSource untuk memutar suara dialog
 
     private int indexDialog = 0;
     private int indexDialogComplete = 0;
@@ -113,7 +118,6 @@ public class NpcControllerL7M2 : MonoBehaviour
 
         if (isMissionCompleted)
         {
-            // ✅ Hanya feedback & chatBoxComplete, jangan pernah munculkan chatBoxUI
             StartCoroutine(TampilkanFeedbackAkhirCoroutine());
         }
         else if (isMissionStarted)
@@ -144,6 +148,7 @@ public class NpcControllerL7M2 : MonoBehaviour
         indexDialog = 0;
         chatBoxUI.SetActive(true);
         chatText.text = dialogKalimatAwal[indexDialog];
+        PlayVoice(audioKalimatAwal, indexDialog); // 🎤 mainkan audio awal
         ControllerPanel.SetActive(false);
 
         terimaButton.gameObject.SetActive(true);
@@ -184,6 +189,7 @@ public class NpcControllerL7M2 : MonoBehaviour
         if (indexDialog < dialogKalimatAwal.Length)
         {
             chatText.text = dialogKalimatAwal[indexDialog];
+            PlayVoice(audioKalimatAwal, indexDialog); // 🎤 mainkan audio awal
         }
 
         if (indexDialog == dialogKalimatAwal.Length - 1)
@@ -223,31 +229,9 @@ public class NpcControllerL7M2 : MonoBehaviour
     IEnumerator TampilkanFeedbackAkhirCoroutine()
     {
         returnToNPCText.SetActive(false);
-
-        // ✅ Pastikan chatBoxComplete & chatBoxUI MATI dulu
         chatBoxComplete.SetActive(false);
         chatBoxUI.SetActive(false);
-        // MASIH BUG BUTUH PERBAIKAN
-        // if (misiBenarSemua)
-        // {
-        //     if (feedbackBenarAkhir != null)
-        //     {
-        //         feedbackBenarAkhir.SetActive(true);
-        //         yield return new WaitForSeconds(2f);
-        //         feedbackBenarAkhir.SetActive(false);
-        //     }
-        // }
-        // else
-        // {
-        //     if (feedbackSalahAkhir != null)
-        //     {
-        //         feedbackSalahAkhir.SetActive(true);
-        //         yield return new WaitForSeconds(2f);
-        //         feedbackSalahAkhir.SetActive(false);
-        //     }
-        // }
 
-        // ✅ Tambah jeda 0.5f sebelum chatBoxComplete muncul
         yield return new WaitForSeconds(0.5f);
 
         ShowCompleteDialog();
@@ -262,7 +246,6 @@ public class NpcControllerL7M2 : MonoBehaviour
         returnToNPCText.SetActive(false);
         uiTaskPanel.SetActive(false);
 
-        // ✅ Simpan skor hanya jika belum pernah disimpan
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             int skor = misiBenarSemua ? 100 : 0;
@@ -274,6 +257,7 @@ public class NpcControllerL7M2 : MonoBehaviour
         if (dialogSetelahBenar.Length > 0)
         {
             chatTextComplete.text = dialogSetelahBenar[indexDialogComplete];
+            PlayVoice(audioSetelahBenar, indexDialogComplete); // 🎤 mainkan audio selesai
         }
         else
         {
@@ -291,6 +275,7 @@ public class NpcControllerL7M2 : MonoBehaviour
         if (indexDialogComplete < dialogSetelahBenar.Length)
         {
             chatTextComplete.text = dialogSetelahBenar[indexDialogComplete];
+            PlayVoice(audioSetelahBenar, indexDialogComplete); // 🎤 mainkan audio selesai
         }
 
         if (indexDialogComplete == dialogSetelahBenar.Length - 1)
@@ -342,6 +327,17 @@ public class NpcControllerL7M2 : MonoBehaviour
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, 0);
             PlayerPrefs.Save();
+        }
+    }
+
+    // 🎤 Fungsi umum untuk memutar audio sesuai index
+    void PlayVoice(AudioClip[] clips, int index)
+    {
+        if (voiceSource != null && clips != null && index >= 0 && index < clips.Length && clips[index] != null)
+        {
+            voiceSource.Stop();
+            voiceSource.clip = clips[index];
+            voiceSource.Play();
         }
     }
 }

@@ -22,6 +22,7 @@ public class DedeController : MonoBehaviour
     [Header("Referensi Objek Misi")]
     public GameObject DedeChatCoxPanelComplet;
     public GameObject chestBox;
+    public GameObject UjangChatBox;
 
     [Header("Feedback UI")]
     public GameObject feedbackBenar;
@@ -29,7 +30,9 @@ public class DedeController : MonoBehaviour
     public float feedbackDuration = 2f;
 
     [Header("Pengaturan Skor")]
-    public string namaPlayerPrefsScore = "L1M3"; // ✅ Bisa diatur dari Inspector
+    public string namaPlayerPrefsScore = "L1M3";
+
+    private bool lastIsCorrect = false; // ✅ simpan hasil terakhir
 
     void Start()
     {
@@ -88,6 +91,7 @@ public class DedeController : MonoBehaviour
 
     public void MulaiMisiPuzzle()
     {
+        UjangChatBox?.SetActive(false);
         chatBoxUI?.SetActive(false);
         panelPuzzle?.SetActive(true);
         controllerPanel?.SetActive(false);
@@ -102,29 +106,38 @@ public class DedeController : MonoBehaviour
         controllerPanel?.SetActive(true);
     }
 
+    public void ShowChatBoxUjang()
+    {
+        UjangChatBox?.SetActive(true);
+        chatBoxUI?.SetActive(false);
+    }
+
     public void OnPuzzleCheckResult(bool isCorrect)
     {
         timeManager?.StopTimer();
         panelPuzzle?.SetActive(false);
         Stop.SetActive(false);
-        StartCoroutine(ShowFeedbackThenComplete(isCorrect));
+        ShowFeedback(isCorrect);
     }
 
-    IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+    private void ShowFeedback(bool isCorrect)
     {
+        lastIsCorrect = isCorrect; // ✅ simpan hasil
+
         int score = isCorrect ? 100 : 0;
 
         if (isCorrect)
         {
             feedbackBenar?.SetActive(true);
+            feedbackSalah?.SetActive(false);
         }
         else
         {
             feedbackSalah?.SetActive(true);
-            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
+            feedbackBenar?.SetActive(false);
+            chestBox?.SetActive(false); // pastikan mati saat salah
         }
 
-        // Simpan skor jika belum pernah disimpan
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
@@ -135,17 +148,21 @@ public class DedeController : MonoBehaviour
         {
             Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
         }
+    }
 
-        yield return new WaitForSeconds(feedbackDuration);
-
+    public void CloseFeedback()
+    {
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
 
-        // ✅ Tunda 0.5 detik baru munculkan chestBox (hanya jika benar)
-        if (isCorrect)
+        // ✅ Hanya tampilkan chestBox kalau benar
+        if (lastIsCorrect)
         {
-            yield return new WaitForSeconds(0.5f);
             chestBox?.SetActive(true);
+        }
+        else
+        {
+            chestBox?.SetActive(false);
         }
 
         isMissionCompleted = true;
@@ -203,6 +220,7 @@ public class DedeController : MonoBehaviour
         DedeChatCoxPanelComplet?.SetActive(false);
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
+        chestBox?.SetActive(false);
         timeManager?.StopTimer();
 
         foreach (DropZone dz in FindObjectsOfType<DropZone>())

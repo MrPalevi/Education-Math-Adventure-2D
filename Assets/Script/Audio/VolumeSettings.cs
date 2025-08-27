@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-
 public class VolumeSettings : MonoBehaviour
 {
     [SerializeField] private AudioMixer myMixer;
@@ -11,42 +10,44 @@ public class VolumeSettings : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerPrefs.HasKey("musicVolume"))
+        // Cek apakah PlayerPrefs untuk volume sudah ada
+        if (!PlayerPrefs.HasKey("musicVolume") || !PlayerPrefs.HasKey("SFXVolume"))
         {
-            LoadVolume();
+            // Jika belum ada, set ke default 1
+            PlayerPrefs.SetFloat("musicVolume", 1f);
+            PlayerPrefs.SetFloat("SFXVolume", 1f);
+            PlayerPrefs.Save(); // Simpan perubahan
         }
-         else 
-        {
-            SetMusicVolume();
-            SetSFXVolume();
-        }
-    }
 
-    private void Update() 
-    {
+        // Load nilai dari PlayerPrefs dan update mixer & slider
         LoadVolume();
     }
 
     public void SetMusicVolume()
     {
         float volume = musicSlider.value;
-        myMixer.SetFloat("music", Mathf.Log10(volume)*20);
+        myMixer.SetFloat("music", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("musicVolume", volume);
+        PlayerPrefs.Save();
     }
 
     public void SetSFXVolume()
     {
         float volume = SFXSlider.value;
-        myMixer.SetFloat("SFX", Mathf.Log10(volume)*20);
+        myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("SFXVolume", volume);
+        PlayerPrefs.Save();
     }
 
     private void LoadVolume()
     {
-        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
-        SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+        float musicVol = PlayerPrefs.GetFloat("musicVolume");
+        float sfxVol = PlayerPrefs.GetFloat("SFXVolume");
 
-        SetMusicVolume();
-        SetSFXVolume();
+        musicSlider.value = musicVol;
+        SFXSlider.value = sfxVol;
+
+        myMixer.SetFloat("music", Mathf.Log10(musicVol) * 20);
+        myMixer.SetFloat("SFX", Mathf.Log10(sfxVol) * 20);
     }
 }

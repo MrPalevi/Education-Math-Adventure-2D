@@ -123,30 +123,35 @@ public class NpcControllerL5M1 : MonoBehaviour
         chatBoxUI?.SetActive(false);
         controllerPanel?.SetActive(true);
     }
-
-    public void OnPuzzleCheckResult(bool isCorrect)
+        public void OnPuzzleCheckResult(bool isCorrect)
     {
         timeManager?.StopTimer();
         panelPuzzle?.SetActive(false);
-        Stop.SetActive(false);
-        StartCoroutine(ShowFeedbackThenComplete(isCorrect));
+        Stop?.SetActive(false);
+
+        ShowFeedback(isCorrect); // tampilkan feedback manual
     }
 
-    IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+    private void ShowFeedback(bool isCorrect)
     {
-        int score = isCorrect ? 100 : 0;
+        // Matikan semua feedback dulu
+        feedbackBenar?.SetActive(false);
+        feedbackSalah?.SetActive(false);
 
         if (isCorrect)
         {
             feedbackBenar?.SetActive(true);
+            Debug.Log("Feedback Benar ditampilkan");
         }
         else
         {
             feedbackSalah?.SetActive(true);
-            chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
+            Debug.Log("Feedback Salah ditampilkan");
+            chestBox?.SetActive(false); // pastikan tidak muncul saat salah
         }
 
-        // Simpan skor jika belum pernah disimpan
+        // Simpan skor jika belum ada
+        int score = isCorrect ? 100 : 0;
         if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
@@ -158,17 +163,18 @@ public class NpcControllerL5M1 : MonoBehaviour
             Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
         }
 
-        yield return new WaitForSeconds(feedbackDuration);
+        isMissionCompleted = true;
+    }
+
+    public void CloseFeedback()
+    {
+        bool isCorrect = feedbackBenar.activeSelf; // cek apakah feedback benar yang aktif
 
         feedbackBenar?.SetActive(false);
         feedbackSalah?.SetActive(false);
 
-        // ✅ Tunda 0.5 detik baru munculkan chestBox (hanya jika benar)
         if (isCorrect)
         {
-            yield return new WaitForSeconds(0.5f);
-
-            // ⬇️ Tentukan posisi baru berdasarkan arah NPC
             Vector3 chestPos = transform.position;
 
             if (spriteRenderer.flipX)
@@ -182,12 +188,77 @@ public class NpcControllerL5M1 : MonoBehaviour
 
             chestBox.transform.position = chestPos;
             chestBox?.SetActive(true);
+            Debug.Log("ChestBox ditampilkan setelah feedbackBenar ditutup");
         }
 
-        isMissionCompleted = true;
         AnnisaChatCoxPanelComplet?.SetActive(true);
         controllerPanel?.SetActive(true);
     }
+
+    // public void OnPuzzleCheckResult(bool isCorrect)
+    // {
+    //     timeManager?.StopTimer();
+    //     panelPuzzle?.SetActive(false);
+    //     Stop.SetActive(false);
+    //     StartCoroutine(ShowFeedbackThenComplete(isCorrect));
+    // }
+
+    // IEnumerator ShowFeedbackThenComplete(bool isCorrect)
+    // {
+    //     int score = isCorrect ? 100 : 0;
+
+    //     if (isCorrect)
+    //     {
+    //         feedbackBenar?.SetActive(true);
+    //     }
+    //     else
+    //     {
+    //         feedbackSalah?.SetActive(true);
+    //         chestBox?.SetActive(false); // Pastikan tidak muncul saat salah
+    //     }
+
+    //     // Simpan skor jika belum pernah disimpan
+    //     if (!PlayerPrefs.HasKey(namaPlayerPrefsScore))
+    //     {
+    //         PlayerPrefs.SetInt(namaPlayerPrefsScore, score);
+    //         PlayerPrefs.Save();
+    //         Debug.Log($"Skor {score} disimpan ke PlayerPrefsScore dengan key: {namaPlayerPrefsScore}");
+    //     }
+    //     else
+    //     {
+    //         Debug.Log($"Skor sudah pernah disimpan di {namaPlayerPrefsScore}, tidak ditimpa.");
+    //     }
+
+    //     yield return new WaitForSeconds(feedbackDuration);
+
+    //     feedbackBenar?.SetActive(false);
+    //     feedbackSalah?.SetActive(false);
+
+    //     // ✅ Tunda 0.5 detik baru munculkan chestBox (hanya jika benar)
+    //     if (isCorrect)
+    //     {
+    //         yield return new WaitForSeconds(0.5f);
+
+    //         // ⬇️ Tentukan posisi baru berdasarkan arah NPC
+    //         Vector3 chestPos = transform.position;
+
+    //         if (spriteRenderer.flipX)
+    //         {
+    //             chestPos += new Vector3(-offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kanan → chest di kiri
+    //         }
+    //         else
+    //         {
+    //             chestPos += new Vector3(offsetChestBox.x, offsetChestBox.y, 0f); // Player dari kiri → chest di kanan
+    //         }
+
+    //         chestBox.transform.position = chestPos;
+    //         chestBox?.SetActive(true);
+    //     }
+
+    //     isMissionCompleted = true;
+    //     AnnisaChatCoxPanelComplet?.SetActive(true);
+    //     controllerPanel?.SetActive(true);
+    // }
 
     void ShowChat()
     {

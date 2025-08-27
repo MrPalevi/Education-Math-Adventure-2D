@@ -28,6 +28,7 @@ public class ResultManager : MonoBehaviour
     public Sprite[] resultSprites; // [0 bintang, 1 bintang, 2 bintang, 3 bintang]
 
     private int totalScore = 0;
+    public PlayerPositionSaver positionSaver;
 
     public void ShowResult()
     {
@@ -76,6 +77,15 @@ public class ResultManager : MonoBehaviour
     public void LevelMenu()
     {
         PlayerPrefs.SetString("MainMenuTargetPanel", "Level");
+        LanjutKeSceneBerikutnya();
         SceneManager.LoadScene("MainMenu");
     }
+
+    private void LanjutKeSceneBerikutnya()
+    {
+        positionSaver.ClearSavedPosition(); // Hapus posisi
+        PlayerPrefs.DeleteKey("LastScenePlayed"); // Hapus info scene terakhir
+        PlayerPrefs.Save();
+    }
+
 }

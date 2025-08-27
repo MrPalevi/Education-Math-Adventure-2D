@@ -50,6 +50,14 @@ public class NpcControllerL7M1 : MonoBehaviour
     [Header("Feedback Benar")]
     public GameObject benarPanel; // ✅ UI feedback benar
 
+    [Header("Dialog")]
+    public AudioClip[] audioKalimatAwal; // Audio untuk dialog awal
+    public AudioClip[] audioSetelahBenar; // Audio untuk dialog setelah benar
+
+    [Header("Audio")]
+    public AudioSource voiceSource; 
+
+
     private bool isMissionStarted = false;
     private bool isMissionCompleted = false;
     private bool isPlayerInRange = false;
@@ -139,6 +147,7 @@ public class NpcControllerL7M1 : MonoBehaviour
         indexDialog = 0;
         chatBoxUI.SetActive(true);
         chatText.text = dialogKalimatAwal[indexDialog];
+        PlayVoice(audioKalimatAwal, indexDialog);
         ControllerPanel.SetActive(false);
 
         terimaButton.gameObject.SetActive(true);
@@ -146,6 +155,7 @@ public class NpcControllerL7M1 : MonoBehaviour
         lanjutButton.gameObject.SetActive(false);
         tutupButton.gameObject.SetActive(false);
     }
+
 
     void TerimaMisi()
     {
@@ -179,6 +189,7 @@ public class NpcControllerL7M1 : MonoBehaviour
         if (indexDialog < dialogKalimatAwal.Length)
         {
             chatText.text = dialogKalimatAwal[indexDialog];
+            PlayVoice(audioKalimatAwal, indexDialog);
         }
 
         if (indexDialog == dialogKalimatAwal.Length - 1)
@@ -245,22 +256,23 @@ public class NpcControllerL7M1 : MonoBehaviour
     }
 
     void LanjutDialogComplete()
+{
+    indexDialogComplete++;
+
+    if (indexDialogComplete < dialogSetelahBenar.Length)
     {
-        indexDialogComplete++;
-
-        if (indexDialogComplete < dialogSetelahBenar.Length)
-        {
-            chatTextComplete.text = dialogSetelahBenar[indexDialogComplete];
-        }
-
-        if (indexDialogComplete == dialogSetelahBenar.Length - 1)
-        {
-            nextCompleteButton.gameObject.SetActive(false);
-            closeCompleteButton.gameObject.SetActive(true);
-            chestBox.SetActive(true);
-            Teleport.SetActive(false);
-        }
+        chatTextComplete.text = dialogSetelahBenar[indexDialogComplete];
+        PlayVoice(audioSetelahBenar, indexDialogComplete);
     }
+
+    if (indexDialogComplete == dialogSetelahBenar.Length - 1)
+    {
+        nextCompleteButton.gameObject.SetActive(false);
+        closeCompleteButton.gameObject.SetActive(true);
+        chestBox.SetActive(true);
+        Teleport.SetActive(false);
+    }
+}
 
     void TutupChatBoxComplete()
     {
@@ -294,6 +306,16 @@ public class NpcControllerL7M1 : MonoBehaviour
         {
             PlayerPrefs.SetInt(namaPlayerPrefsScore, 0);
             PlayerPrefs.Save();
+        }
+    }
+
+    void PlayVoice(AudioClip[] clips, int index)
+    {
+        if (voiceSource != null && clips != null && index >= 0 && index < clips.Length && clips[index] != null)
+        {
+            voiceSource.Stop();
+            voiceSource.clip = clips[index];
+            voiceSource.Play();
         }
     }
 }

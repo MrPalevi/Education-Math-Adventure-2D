@@ -7,8 +7,12 @@ public class ItemController : MonoBehaviour
     public string namaItem = "Nama Item";
     [TextArea(2, 4)] public string deskripsiItem = "Deskripsi item ini.";
 
-    public Button buttonTakeUI; // Ini tetap ditarik dari Inspector (tombol tetap satu, tapi hanya aktif per item)
-    
+    public Button buttonTakeUI;
+
+    [Header("Audio")]
+    public AudioSource audioSource; 
+    public AudioClip takeSound;     // Suara saat item diambil
+
     private bool sudahDiambil = false;
     private ItemManager itemManager;
     private bool playerInRange = false;
@@ -26,7 +30,6 @@ public class ItemController : MonoBehaviour
 
     void Update()
     {
-        // Tombol aktif hanya jika player masih di dalam area dan item belum diambil
         if (buttonTakeUI != null)
             buttonTakeUI.gameObject.SetActive(playerInRange && !sudahDiambil);
     }
@@ -44,6 +47,9 @@ public class ItemController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+
+            if (!sudahDiambil && buttonTakeUI != null)
+                buttonTakeUI.gameObject.SetActive(false);
         }
     }
 
@@ -53,17 +59,32 @@ public class ItemController : MonoBehaviour
 
         sudahDiambil = true;
 
+        // Mainkan audio jika tersedia
+        if (audioSource != null && takeSound != null)
+        {
+            audioSource.PlayOneShot(takeSound);
+        }
+
         // Sembunyikan tombol
         if (buttonTakeUI != null)
             buttonTakeUI.gameObject.SetActive(false);
 
-        // Tampilkan info ke panel
+        // Kirim ke item manager
         if (itemManager != null)
             itemManager.ShowItemInfo(namaItem, deskripsiItem);
 
-        // Nonaktifkan item ini
-        gameObject.SetActive(false);
+        // Nonaktifkan item (diberi delay agar suara bisa terdengar dulu)
+        StartCoroutine(DisableAfterSound());
 
         Debug.Log($"Item diambil: {namaItem}");
+    }
+
+    System.Collections.IEnumerator DisableAfterSound()
+    {
+        // Tunggu suara selesai kalau ada, lalu disable
+        if (takeSound != null)
+            yield return new WaitForSeconds(takeSound.length);
+        
+        gameObject.SetActive(false);
     }
 }
