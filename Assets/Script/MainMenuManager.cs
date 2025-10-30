@@ -57,6 +57,15 @@ public class MainMenuManager : MonoBehaviour
 
     AudioManager audioManager;
 
+    [Header("Shop Unlock Level Settings")]
+    public GameObject UIConfirm;      // Panel konfirmasi beli level
+    public GameObject UIFailed;       // Panel gagal (coin kurang / urutan salah)
+    public int levelUnlockPrice = 4;  // Harga unlock level
+    private int selectedLevelIndex = -1; // Menyimpan index level yang ditekan
+
+    private string coinPrefsKey = "TotalCoins";
+
+
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -64,6 +73,13 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        // Pastikan level 0 selalu terbuka
+        if (PlayerPrefs.GetInt("LevelUnlocked_0", 0) == 0)
+        {
+            PlayerPrefs.SetInt("LevelUnlocked_0", 1);
+            PlayerPrefs.Save();
+        }
+
         if (panelWelcome != null)
             panelWelcome.SetActive(false);
 
@@ -96,6 +112,8 @@ public class MainMenuManager : MonoBehaviour
             BukaPanelLevel();
             PlayerPrefs.DeleteKey("MainMenuTargetPanel");
         }
+
+        RestoreUnlockedLevels();
     }
 
     void CekNamaUser()
@@ -450,28 +468,111 @@ public class MainMenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    // public void ResumePermainan()
-    // {
-    //     if (PemainLanjutan())
-    //     {
-    //         string sceneToLoad = PlayerPrefs.GetString("LastScenePlayed");
-    //         SceneManager.LoadScene(sceneToLoad);
-    //         audioManager.PlaySFX(audioManager.button);
-    //     }
-    //     else
-    //     {
-    //         SceneManager.LoadScene("Level1"); // default scene awal
-    //         audioManager.PlaySFX(audioManager.button);
-    //     }
-    // }
+     // Dipanggil saat tombol level terkunci ditekan
+    public void OnLockedLevelClicked(int index)
+    {
+        if (index < 0 || index >= levelUnlockList.Length) return;
 
-    // private bool PemainLanjutan()
-    // {
-    //     return PlayerPrefs.HasKey("LastScenePlayed") &&
-    //         PlayerPrefs.HasKey("PlayerPosX") &&
-    //         PlayerPrefs.HasKey("PlayerPosY") &&
-    //         PlayerPrefs.HasKey("PlayerPosZ");
-    // }
+        // Cek apakah level ini masih terkunci
+        if (levelUnlockList[index].levelButton != null && !levelUnlockList[index].levelButton.interactable)
+        {
+            selectedLevelIndex = index;
+            if (UIConfirm != null) UIConfirm.SetActive(true);
+        }
+    }
 
+    // Jika user pilih "Tidak" pada konfirmasi
+    public void CancelUnlock()
+    {
+        if (UIConfirm != null) UIConfirm.SetActive(false);
+        selectedLevelIndex = -1;
+    }
 
+    // Jika user pilih "Ya" pada konfirmasi
+    public void ConfirmUnlock()
+    {
+        if (selectedLevelIndex == -1) return;
+
+        int currentCoins = PlayerPrefs.GetInt(coinPrefsKey, 0);
+        Debug.Log("ConfirmUnlock -> CurrentCoins: " + currentCoins + 
+                " | Price: " + levelUnlockPrice + 
+                " | SelectedLevel: " + selectedLevelIndex);
+
+        // ✅ Cek urutan level (level 0 selalu terbuka)
+        bool prevUnlocked = true;
+        if (selectedLevelIndex > 0)
+        {
+            int prevUnlockedPref = PlayerPrefs.GetInt("LevelUnlocked_" + (selectedLevelIndex - 1), 0);
+            prevUnlocked = (prevUnlockedPref == 1);
+        }
+
+        if (!prevUnlocked)
+        {
+            Debug.Log("ConfirmUnlock -> Gagal: previous level belum unlocked.");
+            ShowFailed();
+            return;
+        }
+
+        // ✅ Cek cukup coin
+        if (currentCoins < levelUnlockPrice)
+        {
+            Debug.Log("ConfirmUnlock -> Gagal: koin tidak cukup.");
+            ShowFailed();
+            return;
+        }
+
+        // ✅ Unlock berhasil
+        currentCoins -= levelUnlockPrice;
+        PlayerPrefs.SetInt(coinPrefsKey, currentCoins);
+
+        if (levelUnlockList[selectedLevelIndex].levelButton != null)
+            levelUnlockList[selectedLevelIndex].levelButton.interactable = true;
+
+        if (levelUnlockList[selectedLevelIndex].imageLock != null)
+            levelUnlockList[selectedLevelIndex].imageLock.SetActive(false);
+
+        PlayerPrefs.SetInt("LevelUnlocked_" + selectedLevelIndex, 1); // Simpan status unlock
+        PlayerPrefs.Save();
+
+        Debug.Log("ConfirmUnlock -> Sukses: Level " + selectedLevelIndex + " berhasil di-unlock.");
+
+        // Tutup confirm
+        if (UIConfirm != null) UIConfirm.SetActive(false);
+        selectedLevelIndex = -1;
+    }
+
+    private void ShowFailed()
+    {
+        if (UIConfirm != null) UIConfirm.SetActive(false);
+        if (UIFailed != null) 
+        {
+            UIFailed.SetActive(true);
+            StartCoroutine(HideUIFailedAfterDelay(2f)); // tampil 2 detik
+        }
+        selectedLevelIndex = -1;
+    }
+
+    private System.Collections.IEnumerator HideUIFailedAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (UIFailed != null)
+            UIFailed.SetActive(false);
+    }
+
+    // Panggil ini di Start() atau setelah reset data untuk restore status unlock
+    private void RestoreUnlockedLevels()
+    {
+        for (int i = 0; i < levelUnlockList.Length; i++)
+        {
+            if (PlayerPrefs.GetInt("LevelUnlocked_" + i, 0) == 1)
+            {
+                if (levelUnlockList[i].levelButton != null)
+                    levelUnlockList[i].levelButton.interactable = true;
+
+                if (levelUnlockList[i].imageLock != null)
+                    levelUnlockList[i].imageLock.SetActive(false);
+            }
+        }
+    }
+    
 }

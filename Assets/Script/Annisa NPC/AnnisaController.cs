@@ -31,6 +31,7 @@ public class AnnisaController : MonoBehaviour
     public GameObject Stop;
     public GameObject chestBox;
     public GameObject UjangChatBox;
+    public GameObject UjangChatBoxNolak;
 
     [Header("Dialog")]
     [TextArea(2, 5)] public string[] dialogKalimatAwal;
@@ -119,7 +120,7 @@ public class AnnisaController : MonoBehaviour
                 chatBoxUI.SetActive(false);
                 chatBoxComplete.SetActive(false);
                 ControllerPanel.SetActive(false);
-                StartCoroutine(HideChatBoxNotCompleteAfterDelay(2f));
+                StartCoroutine(HideChatBoxNotCompleteAfterDelay(4f));
             }
             else
             {
@@ -166,12 +167,17 @@ public class AnnisaController : MonoBehaviour
 
     void TolakMisi()
     {
+        UjangChatBoxNolak.SetActive(true);
         isMissionStarted = false;
         isRejected = true;
-
         chatBoxUI.SetActive(false);
-        ControllerPanel.SetActive(true);
         Teleport.SetActive(false);
+    }
+
+    public void TutupDialogUjang()
+    {
+        UjangChatBoxNolak.SetActive(false);
+        ControllerPanel.SetActive(true);
     }
 
     public void LanjutDialogUjang()

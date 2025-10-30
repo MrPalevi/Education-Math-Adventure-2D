@@ -11,6 +11,7 @@ public class RinaController : MonoBehaviour
     public GameObject chatBoxUI;
     public GameObject controllerPanel;
     public GameObject UjangChatBox;
+    public GameObject UjangChatBoxNolak;
 
     private bool isChatShown = false;
     private bool isPlayerInRange = false;
@@ -193,7 +194,13 @@ public class RinaController : MonoBehaviour
 
     public void TolakMisiPuzzle()
     {
+        UjangChatBoxNolak.SetActive(true);
         chatBoxUI?.SetActive(false);
+    }
+
+    public void TutupDialogUjang()
+    {
+        UjangChatBoxNolak.SetActive(false);
         controllerPanel?.SetActive(true);
     }
 

@@ -76,8 +76,11 @@ public class ResultManager : MonoBehaviour
 
     public void LevelMenu()
     {
-        PlayerPrefs.SetString("MainMenuTargetPanel", "Level");
+        positionSaver.ClearSavedPosition(); // Hapus posisi
+        PlayerPrefs.DeleteKey("LastScenePlayed"); // Hapus info scene terakhir
+        PlayerPrefs.Save();
         LanjutKeSceneBerikutnya();
+        PlayerPrefs.SetString("MainMenuTargetPanel", "Level");
         SceneManager.LoadScene("MainMenu");
     }
 

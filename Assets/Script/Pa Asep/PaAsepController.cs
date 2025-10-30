@@ -32,6 +32,7 @@ public class PaAsepController : MonoBehaviour
     public GameObject ReturnToPaAsep;
     public GameObject TimeOverPanel;
     public GameObject UjangChatBox;
+    public GameObject UjangChatBoxNolak;
 
     [Header("Timer")]
     public TimeManager timeManager;
@@ -173,8 +174,16 @@ public class PaAsepController : MonoBehaviour
 
     void TolakMisi()
     {
-        isMissionStarted = false;
         chatBoxUI.SetActive(false);
+        UjangChatBoxNolak.SetActive(true);
+        
+    }
+
+    public void TutupDialogUjang()
+    {
+        UjangChatBoxNolak.SetActive(false);
+        controllerPanel?.SetActive(true);
+        isMissionStarted = false;
         controllerPanel.SetActive(true);
         isRejected = true;
     }
@@ -330,7 +339,7 @@ public class PaAsepController : MonoBehaviour
 
     IEnumerator SembunyikanNoCompleteSetelahDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         ChatBoxUiNoComplete.SetActive(false);
     }
 

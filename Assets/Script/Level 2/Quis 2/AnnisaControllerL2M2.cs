@@ -9,6 +9,8 @@ public class AnnisaControllerL2M2 : MonoBehaviour
     public float detectionRange = 5f;
 
     public GameObject chatBoxUI;
+    public GameObject UjangChatBox;
+    public GameObject UjangChatBoxNolak;
     public GameObject controllerPanel;
     public GameObject Stop;
     private bool isChatShown = false;
@@ -89,9 +91,15 @@ public class AnnisaControllerL2M2 : MonoBehaviour
 
     public void MulaiMisiPuzzle()
     {
-        chatBoxUI?.SetActive(false);
-        panelPuzzle?.SetActive(true);
+        UjangChatBox.SetActive(true);
         controllerPanel?.SetActive(false);
+        chatBoxUI?.SetActive(false);
+    }
+
+    public void DalogUjang()
+    {
+        UjangChatBox.SetActive(false);
+        panelPuzzle?.SetActive(true);
         isTimeOut = false;
         isMissionCompleted = false;
         timeManager?.StartTimer();
@@ -100,6 +108,12 @@ public class AnnisaControllerL2M2 : MonoBehaviour
     public void TolakMisiPuzzle()
     {
         chatBoxUI?.SetActive(false);
+        UjangChatBoxNolak.SetActive(true);
+    }
+
+    public void TutupDialogUjang()
+    {
+        UjangChatBoxNolak.SetActive(false);
         controllerPanel?.SetActive(true);
     }
 

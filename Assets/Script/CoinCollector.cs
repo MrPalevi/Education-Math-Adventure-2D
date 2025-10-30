@@ -61,7 +61,7 @@ public class CoinCollector : MonoBehaviour
         if (currentCoin == null) return;
 
         // Tambah coin langsung ke PlayerPrefs agar sumber kebenaran satu tempat
-        int current = PlayerPrefs.GetInt(coinPrefsKey, 0) + 1;
+        int current = PlayerPrefs.GetInt(coinPrefsKey, 0) + 5;
         PlayerPrefs.SetInt(coinPrefsKey, current);
         PlayerPrefs.Save();
 

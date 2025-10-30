@@ -23,6 +23,7 @@ public class DedeController : MonoBehaviour
     public GameObject DedeChatCoxPanelComplet;
     public GameObject chestBox;
     public GameObject UjangChatBox;
+    public GameObject UjangChatBoxNolak;
 
     [Header("Feedback UI")]
     public GameObject feedbackBenar;
@@ -102,7 +103,13 @@ public class DedeController : MonoBehaviour
 
     public void TolakMisiPuzzle()
     {
+        UjangChatBoxNolak.SetActive(true);
         chatBoxUI?.SetActive(false);
+    }
+
+    public void TutupDialogUjang()
+    {
+        UjangChatBoxNolak.SetActive(false);
         controllerPanel?.SetActive(true);
     }
 

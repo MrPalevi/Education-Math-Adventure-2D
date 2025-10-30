@@ -9,6 +9,8 @@ public class NpcControllerL4M2 : MonoBehaviour
     public float detectionRange = 5f;
 
     public GameObject chatBoxUI;
+    public GameObject UjangChatBox;
+    public GameObject UjangChatBoxNolak;
     public GameObject controllerPanel;
     public GameObject Stop;
     private bool isChatShown = false;
@@ -93,18 +95,31 @@ public class NpcControllerL4M2 : MonoBehaviour
 
     public void MulaiMisiPuzzle()
     {
+        UjangChatBox.SetActive(true);
         chatBoxUI?.SetActive(false);
-        panelSoal?.SetActive(true);
         controllerPanel?.SetActive(false);
+    }
+
+    public void DalogUjang()
+    {
+        UjangChatBox.SetActive(false);
+        panelSoal?.SetActive(true);
         isTimeOut = false;
         isMissionCompleted = false;
         timeManager?.StartTimer();
+
+    }
+
+    public void TutupDialogUjang()
+    {
+        UjangChatBoxNolak.SetActive(false);
+        controllerPanel?.SetActive(true);
     }
 
     public void TolakMisiPuzzle()
     {
+        UjangChatBoxNolak.SetActive(true);
         chatBoxUI?.SetActive(false);
-        controllerPanel?.SetActive(true);
     }
 
     public void OnPuzzleCheckResult(bool isCorrect)
