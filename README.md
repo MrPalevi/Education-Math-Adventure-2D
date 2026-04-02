@@ -1,7 +1,7 @@
-<h1 align="center">Education Math Adventure 2D</h1>
+<h1 align="center">🎮 Education Math Adventure 2D 🎮</h1>
 
 <p align="center">
-  <strong>Game Edukasi Matematika untuk Anak Usia 7-8 Tahun (Kelas 1 SD)</strong>
+  <strong>🏆 Game Edukasi Matematika untuk Anak Usia 7-8 Tahun (Kelas 1 SD)</strong>
 </p>
 
 <p align="center">
