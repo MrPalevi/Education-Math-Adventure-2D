@@ -41,10 +41,12 @@
 </p>
 
 <p align="center">
+  <img src="SS/QuestProgress.jpg" width="30%" alt="QuestProgress">
   <img src="SS/Quest1.jpg" width="30%" alt="Quest 1">
   <img src="SS/Quest2.jpg" width="30%" alt="Quest 2">
   <img src="SS/Quest3.jpg" width="30%" alt="Quest 3">
   <img src="SS/Quest4.jpg" width="30%" alt="Quest 4">
+
 </p>
 
 <br>
@@ -56,6 +58,25 @@
 <p align="center">
   <img src="SS/Profile.jpg" width="30%" alt="User Profile">
   <img src="SS/ProfileProgres.jpg" width="30%" alt="User Progress">
+</p>
+
+<p align="center">
+  <em>Reward and Shop</em>
+</p>
+
+<p align="center">
+  <img src="SS/FinishLv1.jpg" width="30%" alt="User Profile">
+  <img src="SS/QuestFinish.jpg" width="30%" alt="QuestFinish">
+  <img src="SS/ShopMenu.jpg" width="30%" alt="User Progress">
+  
+</p>
+
+<p align="center">
+  <em>Result UI</em>
+</p>
+
+<p align="center">
+  <img src="SS/Result.jpg" width="30%" alt="Result">
 </p>
 
 <hr>
